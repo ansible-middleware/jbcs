@@ -10,9 +10,9 @@
     state: enabled
     immediate: yes
   loop:
-    - "80/tcp"
-    - "443/tcp"
-    - "6666/tcp"
+    - "{{ jbcs_listen_port }}/tcp"
+    - "{{ jbcs_ssl_port }}/tcp"
+    - "{{ jbcs_mod_cluster_port }}/tcp"
   loop_control:
     loop_var: port
 

@@ -32,7 +32,7 @@ Group apache
 
 ServerAdmin Administrator@localhost
 
-ServerName {{ inventory_hostname }}:80
+ServerName {{ inventory_hostname }}:{{ httpd.listen_port }}
 
 UseCanonicalName Off
 
