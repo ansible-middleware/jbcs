@@ -1,25 +1,29 @@
 ---
-- ansible.builtin.assert:
+- name: Check preconditions
+  ansible.builtin.assert:
     that:
       - httpd is defined
       - httpd.home is defined
     quiet: true
 
-- ansible.builtin.set_fact:
+- name: Path for SSL enabled
+  ansible.builtin.set_fact:
     ssl_conf: "{{ httpd.home }}/httpd/conf.d/ssl.conf"
 
-- ansible.builtin.set_fact:
+- name: Path for SSL disabled
+  ansible.builtin.set_fact:
     ssl_conf_disabled: "{{ ssl_conf }}.disabled"
 
-- ansible.builtin.stat:
+- name: Check existance of SSL configuration
+  ansible.builtin.stat:
     path: "{{ ssl_conf }}"
   register: ssl_conf_file
 
-- block:
-    - ansible.builtin.stat:
-        path: "{{ ssl_conf_disabled }}"
-      register: ssl_conf_disabled_file
+- ansible.builtin.stat:
+    path: "{{ ssl_conf_disabled }}"
+  register: ssl_conf_disabled_file
 
+- block:
     - name: "Disabled SSL"
       ansible.builtin.file:
         src: "{{ ssl_conf }}"
@@ -40,7 +44,7 @@
       when:
         - ssl_conf_remove.stat.exists
   when:
-    - not httpd_ssl is defined
+    - not jbcs_ssl_enable
 
 - block:
     - name: "Ensures HTTPd SSL configuration is deployed"
@@ -53,15 +57,11 @@
       notify:
         - Restart JBCS
 
-    - ansible.builtin.stat:
-        path: "{{ ssl_conf_disabled }}"
-      register: is_ssl_conf_disabled
-
     - name: "Remove disabled conf if exists"
       ansible.builtin.file:
         path: "{{ ssl_conf_disabled }}"
         state: absent
       when:
-        - is_ssl_conf_disabled.stat.exists
+        - ssl_conf_disabled_file.stat.exists
   when:
-    - httpd_ssl is defined
+    - jbcs_ssl_enable

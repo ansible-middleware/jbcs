@@ -1,13 +1,14 @@
 ---
 httpd:
-  bind_address: "localhost"
-  listen_port: "80"
+  bind_address: "{{ jbcs_bind_address }}"
+  listen_port: "{{ jbcs_listen_port }}"
   mod_cluster:
-    port: 6666
-    require: "all granted"
-  home: /opt/jbcs/jbcs-httpd24-2.4/
+    enable: "{{ jbcs_mod_cluster_enable }}"
+    port: "{{ jbcs_mod_cluster_port }}"
+    require: "{{ jbcs_mod_cluster_require }}"
+  home: "{{ jbcs_home }}"
   user:
-    name: apache
+    name: "{{ jbcs_user }}"
   group:
-    name: apache
-    id: 48
+    name: "{{ jbcs_group }}"
+    id: "{{ jbcs_group_id }}"

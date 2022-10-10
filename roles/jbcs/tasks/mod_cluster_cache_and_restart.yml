@@ -1,13 +1,14 @@
 ---
-- name: 'expire mod_cluster cache and restart'
+- name: Expire modcluster cache and restart
   become: true
   block:
     - ansible.builtin.assert:
         that:
           - httpd is defined
           - httpd.home is defined
+
     - ansible.builtin.service:
-        name: jbcs-httpd24-httpd.service
+        name: "{{ jbcs_service_name }}.service"
         state: stopped
 
     - ansible.builtin.file:
@@ -15,5 +16,5 @@
         state: absent
     
     - ansible.builtin.service:
-        name: jbcs-httpd24-httpd.service
+        name: "{{ jbcs_service_name }}.service"
         state: started

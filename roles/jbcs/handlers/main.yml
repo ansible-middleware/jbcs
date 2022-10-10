@@ -1,8 +1,14 @@
 ---
 - name: "Restart JBCS"
+  become: yes
   service:
-    name: jbcs-httpd24-httpd.service
+    name: "{{ jbcs_service_name }}.service"
     state: restarted
 
 - name: "expire mod_cluster cache and restart"
   include_tasks: tasks/mod_cluster_cache_and_restart.yml
+
+- name: "Reload systemd"
+  become: yes
+  ansible.builtin.systemd:
+    daemon_reload: yes

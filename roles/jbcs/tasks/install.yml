@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.assert:
+- name: "Check preconditions"
+  ansible.builtin.assert:
     that:
       - httpd is defined
       - httpd.user is defined
@@ -9,13 +10,15 @@
       - httpd.home is defined
     quiet: true
 
-- ansible.builtin.group:
+- name: Create group
+  ansible.builtin.group:
     name: "{{ httpd.group.name }}"
     state: present
     gid: "{{ httpd.group.id | default(omit) }}"
     system: true
 
-- ansible.builtin.user:
+- name: Create user
+  ansible.builtin.user:
     name: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     home: /opt/jbcs/
@@ -23,15 +26,16 @@
     uid: "{{ httpd.user.id | default(omit) }}"
     system: true
 
-- ansible.builtin.file:
+- name: Create home directory
+  ansible.builtin.file:
     path: /opt/jbcs/
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-    recurse: true
   changed_when: false
 
-- ansible.builtin.file:
-    path: "{{ zip_file_repo }}"
+- name: Create directory for zipfile
+  ansible.builtin.file:
+    path: "{{ jbcs_zip_path }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: 0750
@@ -40,7 +44,7 @@
 ## check remote archive
 - name: Set download archive path
   ansible.builtin.set_fact:
-    archive: "{{ zip_file_repo }}/{{ jbcs_bundle }}"
+    archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
 
 - name: Check download archive path
   become: yes
@@ -64,7 +68,7 @@
 - name: Download JBoss Core Services from CSP
   redhat.redhat_csp_download.redhat_csp_download:
     url: "https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=104386&product=core.service.apachehttp"
-    dest: "{{ zip_file_repo }}/{{ jbcs_bundle }}"
+    dest: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
     username: "{{ rhn_username }}"
     password: "{{ rhn_password }}"
   no_log: "{{ omit_rhn_output | default(true) }}"
@@ -104,7 +108,7 @@
   register: path_to_workdir
   become: yes
 
-- name: "Extract JBCS archive on target"
+- name: Extract JBCS archive on target
   ansible.builtin.unarchive:
     remote_src: yes
     src: "{{ archive }}"
@@ -124,13 +128,17 @@
   when:
     - not new_version_downloaded.changed and path_to_workdir.stat.exists
 
-- name: "Post install HTTPD"
-  ansible.builtin.command:
-    cmd: "{{ httpd.home }}/httpd/.postinstall.systemd"
-    chdir: "{{ httpd.home }}/httpd/"
-    creates: /usr/lib/systemd/system/jbcs-httpd24-httpd.service
+- name: Post install HTTPD
+  ansible.builtin.template:
+    src: templates/jbcs-httpd24-httpd.service.j2
+    dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
+    owner: "{{ httpd.user.name }}"
+    group: "{{ httpd.group.name }}"
+    mode: 0640
+  notify:
+    - "Reload systemd"
 
-- name: "Ensures JBCS configuration is correct"
+- name: Ensures JBCS configuration is correct
   ansible.builtin.template:
     src: templates/httpd.conf.j2
     dest: "{{ httpd.home }}/httpd/conf/httpd.conf"

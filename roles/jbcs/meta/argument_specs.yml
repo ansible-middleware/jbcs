@@ -1,5 +1,88 @@
 argument_specs:
     main:
         options:
-    downstream:
-        options:
+            jbcs_ssl_enable:
+                # line 2 of jbcs/defaults/main.yml
+                default: true
+                description: "Enable SSL"
+                type: "bool"
+            jbcs_ssl_port:
+                # line 3 of jbcs/defaults/main.yml
+                default: 443
+                description: "SSL listen port"
+                type: "int"
+            jbcs_bundle:
+                # line 5 of jbcs/defaults/main.yml
+                default: "jbcs-httpd24-httpd-2.4.37-SP11-RHEL8-x86_64.zip"
+                description: "Filename of JBCS install archive"
+                type: "str"
+            jbcs_zip_path:
+                # line 6 of jbcs/defaults/main.yml
+                default: "/opt/apps"
+                description: "Destination for install archive download"
+                type: "str"
+            jbcs_home:
+                # line 8 of jbcs/defaults/main.yml
+                default: "/opt/jbcs/jbcs-httpd24-2.4/"
+                description: "Home directory"
+                type: "str"
+            jbcs_bind_address:
+                # line 10 of jbcs/defaults/main.yml
+                default: "localhost"
+                description: "Bind address"
+                type: "str"
+            jbcs_listen_port:
+                # line 11 of jbcs/defaults/main.yml
+                default: 80
+                description: "HTTP listen port"
+                type: "int"
+            jbcs_mod_cluster_enable:
+                # line 13 of jbcs/defaults/main.yml
+                default: false
+                description: "Enable modcluster module"
+                type: "bool"
+            jbcs_mod_cluster_port:
+                # line 14 of jbcs/defaults/main.yml
+                default: 6666
+                description: "Modcluster advertise port"
+                type: "int"
+            jbcs_mod_cluster_require:
+                # line 15 of jbcs/defaults/main.yml
+                default: "all granted"
+                description: "Require argument for modcluster location"
+                type: "str"
+            jbcs_mod_cluster_balancer:
+                # line 16 of jbcs/defaults/main.yml
+                default: "loadbalancer"
+                description: "Balancer name for modcluster cluster"
+                type: "str"
+            jbcs_user:
+                # line 18 of jbcs/defaults/main.yml
+                default: "apache"
+                description: "POSIX user for service"
+                type: "str"
+            jbcs_user_id:
+                # line 19 of jbcs/defaults/main.yml
+                default: 48
+                description: "POSIX uid for service"
+                type: "int"
+            jbcs_group:
+                # line 20 of jbcs/defaults/main.yml
+                default: "apache"
+                description: "POSIX group for service"
+                type: "str"
+            jbcs_group_id:
+                # line 21 of jbcs/defaults/main.yml
+                default: 48
+                description: "POSIX gid for service"
+                type: "int"
+            jbcs_service_name:
+                # line 23 of jbcs/defaults/main.yml
+                default: "jbcs"
+                description: "Name of systemd service"
+                type: "str"
+            jbcs_external_domain_name:
+                # line 25 of jbcs/defaults/main.yml
+                default: "{{ ansible_nodename }}"
+                description: "Name for virtualhost ServerName directive"
+                type: "str"

@@ -1,4 +1,25 @@
 ---
-httpd_ssl: yes
+jbcs_ssl_enable: true
+jbcs_ssl_port: 443
+
 jbcs_bundle: jbcs-httpd24-httpd-2.4.37-SP11-RHEL8-x86_64.zip
-zip_file_repo: /opt/apps 
+jbcs_zip_path: /opt/apps 
+
+jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/
+
+jbcs_bind_address: "localhost"
+jbcs_listen_port: 80
+
+jbcs_mod_cluster_enable: false
+jbcs_mod_cluster_port: 6666
+jbcs_mod_cluster_require: "all granted"
+jbcs_mod_cluster_balancer: loadbalancer
+
+jbcs_user: apache
+jbcs_user_id: 48
+jbcs_group: apache
+jbcs_group_id: 48
+
+jbcs_service_name: jbcs
+
+jbcs_external_domain_name: "{{ ansible_nodename }}"

@@ -5,7 +5,7 @@
 # directives see <URL:http://httpd.apache.org/docs/2.4/mod/mod_ssl.html>
 #
 
-Listen 443
+Listen {{ jbcs_ssl_port }}
 
 AddType application/x-x509-ca-cert .crt
 AddType application/x-pkcs7-crl    .crl
@@ -22,7 +22,7 @@ SSLRandomSeed connect builtin
 
 SSLCryptoDevice builtin
 
-<VirtualHost _default_:443>
+<VirtualHost _default_:{{ jbcs_ssl_port }}>
 
 ErrorLog logs/ssl_error_log
 TransferLog logs/ssl_access_log
@@ -35,13 +35,9 @@ SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
 #SSLCipherSuite RC4-SHA:AES128-SHA:HIGH:MEDIUM:!aNULL:!MD5
 #SSLHonorCipherOrder on
 
-SSLCertificateFile /etc/pki/tls/certs/{{ external_domain_name }}.crt
-SSLCertificateKeyFile /etc/pki/tls/private/{{ external_domain_name }}.key
+SSLCertificateFile /etc/pki/tls/certs/{{ jbcs_external_domain_name }}.crt
+SSLCertificateKeyFile /etc/pki/tls/private/{{ jbcs_external_domain_name }}.key
 
-#SSLVerifyClient require
-#SSLVerifyDepth  10
-
-#SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
 <Files ~ \.(cgi|shtml|phtml|php3?)$>
     SSLOptions +StdEnvVars
 </Files>
@@ -49,18 +45,15 @@ SSLCertificateKeyFile /etc/pki/tls/private/{{ external_domain_name }}.key
     SSLOptions +StdEnvVars
 </Directory>
 
-BrowserMatch "MSIE [2-5]" \
-         nokeepalive ssl-unclean-shutdown \
-         downgrade-1.0 force-response-1.0
+BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
+CustomLog logs/ssl_request_log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
-CustomLog logs/ssl_request_log \
-          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
-
-
-    <Location /mcm>
-      SetHandler mod_cluster-manager
-      Require all granted
-   </Location>
+{% if jbcs_mod_cluster_enabled %}
+<Location /mcm>
+    SetHandler mod_cluster-manager
+    Require all granted
+</Location>
+{% endif %}
 
 </VirtualHost>

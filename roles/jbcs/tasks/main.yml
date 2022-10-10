@@ -22,8 +22,9 @@
   include_tasks: ssl.yml
 
 - name: "Start HTTPd Service"
+  become: yes
   ansible.builtin.service:
-    name: jbcs-httpd24-httpd.service
+    name: "{{ jbcs_service_name }}.service"
     state: started
     enabled: yes
 
@@ -45,5 +46,6 @@
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: 0640
+  when: jbcs_mod_cluster_enable
   notify:
     - 'expire mod_cluster cache and restart'
