@@ -1,5 +1,6 @@
 ---
-- include_tasks: prereqs.yml
+- name: Include prereq trasks
+  ansible.builtin.include_tasks: prereqs.yml
 
 - name: configure firewall for JBCS ports
   become: yes
@@ -16,10 +17,10 @@
     loop_var: port
 
 - name: Import install tasks
-  include_tasks: install.yml
+  ansible.builtin.include_tasks: install.yml
 
 - name: Import SSL configuration tasks
-  include_tasks: ssl.yml
+  ansible.builtin.include_tasks: ssl.yml
 
 - name: "Start HTTPd Service"
   become: yes

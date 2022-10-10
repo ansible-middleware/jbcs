@@ -19,34 +19,34 @@
     path: "{{ ssl_conf }}"
   register: ssl_conf_file
 
-- ansible.builtin.stat:
+- name: Check existance of disabled SSL configuration
+  ansible.builtin.stat:
     path: "{{ ssl_conf_disabled }}"
   register: ssl_conf_disabled_file
 
-- block:
+- name: Disable SSL tasks
+  when: not jbcs_ssl_enable
+  block:
     - name: "Disabled SSL"
       ansible.builtin.file:
         src: "{{ ssl_conf }}"
         path: "{{ ssl_conf }}.disabled"
         state: hard
+        owner: "{{ httpd.user.name }}"
+        group: "{{ httpd.group.name }}"
+        mode: 0640
       when:
         - ssl_conf_file.stat.exists
         - not ssl_conf_disabled_file.stat.exists
 
-    - ansible.builtin.stat:
-        path: "{{ ssl_conf }}.disabled"
-      register: ssl_conf_remove
-
-    - name: "Remove old file"
+    - name: "Remove SSL configuration"
       ansible.builtin.file:
         path: "{{ ssl_conf }}"
         state: absent
-      when:
-        - ssl_conf_remove.stat.exists
-  when:
-    - not jbcs_ssl_enable
 
-- block:
+- name: Enable SSL tasks
+  when: jbcs_ssl_enable
+  block:
     - name: "Ensures HTTPd SSL configuration is deployed"
       ansible.builtin.template:
         src: templates/ssl.conf.j2
@@ -63,5 +63,3 @@
         state: absent
       when:
         - ssl_conf_disabled_file.stat.exists
-  when:
-    - jbcs_ssl_enable

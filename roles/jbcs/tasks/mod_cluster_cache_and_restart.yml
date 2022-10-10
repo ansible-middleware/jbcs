@@ -2,19 +2,23 @@
 - name: Expire modcluster cache and restart
   become: true
   block:
-    - ansible.builtin.assert:
+    - name: Check prereqs
+      ansible.builtin.assert:
         that:
           - httpd is defined
           - httpd.home is defined
 
-    - ansible.builtin.service:
+    - name: Stop JBCS
+      ansible.builtin.service:
         name: "{{ jbcs_service_name }}.service"
         state: stopped
 
-    - ansible.builtin.file:
+    - name: Clear modcluster cache
+      ansible.builtin.file:
         path: "{{ httpd.home }}/httpd/cache/mod_cluster/"
         state: absent
     
-    - ansible.builtin.service:
+    - name: Start JBCS
+      ansible.builtin.service:
         name: "{{ jbcs_service_name }}.service"
         state: started

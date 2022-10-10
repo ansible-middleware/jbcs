@@ -138,7 +138,7 @@
   notify:
     - "Reload systemd"
 
-- name: Ensures JBCS configuration is correct
+- name: Ensure JBCS configuration is correct
   ansible.builtin.template:
     src: templates/httpd.conf.j2
     dest: "{{ httpd.home }}/httpd/conf/httpd.conf"
