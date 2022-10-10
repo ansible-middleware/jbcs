@@ -1,6 +1,6 @@
 ---
 - name: "Ensure that firewalld service is running"
-  systemd:
+  ansible.builtin.systemd:
     name: firewalld
     enabled: yes
     state: started

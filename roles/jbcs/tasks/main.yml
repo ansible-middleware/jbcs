@@ -3,7 +3,7 @@
 
 - name: configure firewall for JBCS ports
   become: yes
-  firewalld:
+  ansible.posix.firewalld:
     port: "{{ port }}"
     permanent: true
     state: enabled
@@ -15,17 +15,20 @@
   loop_control:
     loop_var: port
 
-- include_tasks: install-jb-httpd.yml
-- include_tasks: ssl.yml
+- name: Import install tasks
+  include_tasks: install.yml
+
+- name: Import SSL configuration tasks
+  include_tasks: ssl.yml
 
 - name: "Start HTTPd Service"
-  service:
+  ansible.builtin.service:
     name: jbcs-httpd24-httpd.service
     state: started
     enabled: yes
 
 - name: "Wait for all used ports to be open"
-  wait_for:
+  ansible.builtin.wait_for:
     port: "{{ item }}"
     delay: 0
   loop:
@@ -36,8 +39,11 @@
     - check_jbcs_port is defined
 
 - name: "Ensures mod_cluster configuration is deployed"
-  template:
+  ansible.builtin.template:
     src: templates/mod_cluster.conf.j2
     dest: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf"
+    owner: "{{ httpd.user.name }}"
+    group: "{{ httpd.group.name }}"
+    mode: 0640
   notify:
     - 'expire mod_cluster cache and restart'

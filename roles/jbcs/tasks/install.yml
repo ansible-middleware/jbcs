@@ -1,5 +1,5 @@
 ---
-- assert:
+- ansible.builtin.assert:
     that:
       - httpd is defined
       - httpd.user is defined
@@ -9,13 +9,13 @@
       - httpd.home is defined
     quiet: true
 
-- group:
+- ansible.builtin.group:
     name: "{{ httpd.group.name }}"
     state: present
     gid: "{{ httpd.group.id | default(omit) }}"
     system: true
 
-- user:
+- ansible.builtin.user:
     name: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     home: /opt/jbcs/
@@ -23,14 +23,14 @@
     uid: "{{ httpd.user.id | default(omit) }}"
     system: true
 
-- file:
+- ansible.builtin.file:
     path: /opt/jbcs/
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     recurse: true
   changed_when: false
 
-- file:
+- ansible.builtin.file:
     path: "{{ zip_file_repo }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
@@ -125,14 +125,17 @@
     - not new_version_downloaded.changed and path_to_workdir.stat.exists
 
 - name: "Post install HTTPD"
-  command:
+  ansible.builtin.command:
     cmd: "{{ httpd.home }}/httpd/.postinstall.systemd"
     chdir: "{{ httpd.home }}/httpd/"
     creates: /usr/lib/systemd/system/jbcs-httpd24-httpd.service
 
 - name: "Ensures JBCS configuration is correct"
-  template:
+  ansible.builtin.template:
     src: templates/httpd.conf.j2
     dest: "{{ httpd.home }}/httpd/conf/httpd.conf"
+    owner: "{{ httpd.user.name }}"
+    group: "{{ httpd.group.name }}"
+    mode: 0640
   notify:
     - "Restart JBCS"
