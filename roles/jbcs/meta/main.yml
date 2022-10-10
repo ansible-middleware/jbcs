@@ -1,2 +1,28 @@
 ---
+collections:
+  - middleware_automation.redhat_csp_download
 
+galaxy_info:
+  role_name: jbcs
+  namespace: middleware_automation
+  author: Romain Pelisse, Guido Grazioli
+  description: Install and configure JBoss Core Service.
+  company: Red Hat, Inc.
+
+  license: Apache License 2.0
+
+  min_ansible_version: "2.9"
+
+  platforms:
+   - name: EL
+     versions:
+     - 8
+
+  galaxy_tags:
+    - httpd
+    - jbcs
+    - redhat
+    - rhel
+    - rhn
+    - server
+    - infrastructure
