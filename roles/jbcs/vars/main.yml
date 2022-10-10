@@ -1,0 +1,13 @@
+---
+httpd:
+  bind_address: "localhost"
+  listen_port: "80"
+  mod_cluster:
+    port: 6666
+    require: "all granted"
+  home: /opt/jbcs/jbcs-httpd24-2.4/
+  user:
+    name: apache
+  group:
+    name: apache
+    id: 48

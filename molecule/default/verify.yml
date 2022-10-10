@@ -1,0 +1,7 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: foo
+      ansible.builtin.debug:
+        msg: "bar"
