@@ -2,7 +2,7 @@
 - name: Include prereq trasks
   ansible.builtin.include_tasks: prereqs.yml
 
-- name: configure firewall for JBCS ports
+- name: Configure firewall for JBCS ports
   become: yes
   ansible.posix.firewalld:
     port: "{{ port }}"
