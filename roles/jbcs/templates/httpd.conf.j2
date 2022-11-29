@@ -202,11 +202,6 @@ AddHandler type-map var
 AddType text/html .shtml
 AddOutputFilter INCLUDES .shtml
 
-#ErrorDocument 500 "The server made a boo boo."
-#ErrorDocument 404 /missing.html
-#ErrorDocument 404 "/cgi-bin/missing_handler.pl"
-#ErrorDocument 402 http://www.example.com/subscription_info.html
-
 Alias /error/ "{{ httpd.home }}/httpd/www/error/"
 
 <IfModule mod_negotiation.c>
@@ -220,25 +215,6 @@ Alias /error/ "{{ httpd.home }}/httpd/www/error/"
         LanguagePriority en es de fr
         ForceLanguagePriority Prefer Fallback
     </Directory>
-
-#    ErrorDocument 400 /error/HTTP_BAD_REQUEST.html.var
-#    ErrorDocument 401 /error/HTTP_UNAUTHORIZED.html.var
-#    ErrorDocument 403 /error/HTTP_FORBIDDEN.html.var
-#    ErrorDocument 404 /error/HTTP_NOT_FOUND.html.var
-#    ErrorDocument 405 /error/HTTP_METHOD_NOT_ALLOWED.html.var
-#    ErrorDocument 408 /error/HTTP_REQUEST_TIME_OUT.html.var
-#    ErrorDocument 410 /error/HTTP_GONE.html.var
-#    ErrorDocument 411 /error/HTTP_LENGTH_REQUIRED.html.var
-#    ErrorDocument 412 /error/HTTP_PRECONDITION_FAILED.html.var
-#    ErrorDocument 413 /error/HTTP_REQUEST_ENTITY_TOO_LARGE.html.var
-#    ErrorDocument 414 /error/HTTP_REQUEST_URI_TOO_LARGE.html.var
-#    ErrorDocument 415 /error/HTTP_UNSUPPORTED_MEDIA_TYPE.html.var
-#    ErrorDocument 500 /error/HTTP_INTERNAL_SERVER_ERROR.html.var
-#    ErrorDocument 501 /error/HTTP_NOT_IMPLEMENTED.html.var
-#    ErrorDocument 502 /error/HTTP_BAD_GATEWAY.html.var
-#    ErrorDocument 503 /error/HTTP_SERVICE_UNAVAILABLE.html.var
-#    ErrorDocument 506 /error/HTTP_VARIANT_ALSO_VARIES.html.var
-
 </IfModule>
 </IfModule>
 
@@ -256,23 +232,5 @@ BrowserMatch "^gnome-vfs/1.0" redirect-carefully
 BrowserMatch "^XML Spy" redirect-carefully
 BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 
-#<Location /server-status>
-#    SetHandler server-status
-#    Require host example.org
-#</Location>
-
-#<Location /server-info>
-#    SetHandler server-info
-#    Require host example.org
-#</Location>
-
-#NameVirtualHost *:80
-#<VirtualHost *:80>
-#    ServerAdmin webmaster@dummy-host.example.com
-#    DocumentRoot var/www/docs/dummy-host.example.com
-#    ServerName dummy-host.example.com
-#    ErrorLog logs/dummy-host.example.com-error_log
-#    CustomLog logs/dummy-host.example.com-access_log common
-#</VirtualHost>
-
-IncludeOptional conf.d/*.conf
+IncludeOptional conf.d/ssl.conf
+IncludeOptional conf.d/mod_cluster.conf
