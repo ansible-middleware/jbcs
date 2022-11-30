@@ -5,8 +5,8 @@ After=network.target remote-fs.target nss-lookup.target
 [Service]
 Type=notify
 EnvironmentFile=-/etc/sysconfig/httpd
-ExecStart={{ httpd.home }}/httpd/sbin/httpd $OPTIONS -DFOREGROUND
-ExecReload={{ httpd.home }}/httpd/sbin/httpd $OPTIONS -k graceful
+ExecStart={{ httpd.home }}/httpd/sbin/httpd -f {{ httpd.home }}/httpd/conf/httpd.conf $OPTIONS -DFOREGROUND
+ExecReload={{ httpd.home }}/httpd/sbin/httpd -f {{ httpd.home }}/httpd/conf/httpd.conf $OPTIONS -k graceful
 ExecStop=/bin/kill -WINCH ${MAINPID}
 # We want systemd to give httpd some time to finish gracefully, but still want
 # it to kill httpd after TimeoutStopSec if something went wrong during the
