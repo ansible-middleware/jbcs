@@ -140,6 +140,16 @@
 
 - name: Ensure JBCS configuration is correct
   ansible.builtin.template:
+    src: templates/00-base.conf.j2
+    dest: "{{ httpd.home }}/httpd/conf.modules.d/00-base.conf"
+    owner: "{{ httpd.user.name }}"
+    group: "{{ httpd.group.name }}"
+    mode: 0640
+  notify:
+    - "Restart JBCS"
+
+- name: Ensure JBCS configuration is correct
+  ansible.builtin.template:
     src: templates/httpd.conf.j2
     dest: "{{ httpd.home }}/httpd/conf/httpd.conf"
     owner: "{{ httpd.user.name }}"
