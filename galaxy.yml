@@ -1,7 +1,7 @@
 ---
 namespace: middleware_automation
 name: jbcs
-version: "0.0.1"
+version: "0.0.2"
 readme: README.md
 authors:
   - Romain Pelisse <rpelisse@redhat.com>
@@ -17,6 +17,7 @@ tags:
   - server
 dependencies:
   "middleware_automation.redhat_csp_download": ">=1.2.1"
+  "ansible.posix": ">=1.4.0"
 repository: https://github.com/ansible-middleware/jbcs
 documentation: https://ansible-middleware.github.io/jbcs
 homepage: https://github.com/ansible-middleware/jbcs
