@@ -2,9 +2,7 @@
 - name: Check packages to be installed
   block:
   - name: "Check if packages are already installed"
-    ansible.builtin.command: "rpm -q {{ packages_list | join(' ') }}"
-    args:
-      warn: no
+    ansible.builtin.command: "rpm -q {{ packages_list | join(' ') }}" # noqa command-instead-of-module faster than rpm module
     register: rpm_info
     changed_when: rpm_info.failed
 
