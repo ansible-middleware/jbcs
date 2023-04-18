@@ -4,3 +4,5 @@ releases:
     release_date: '2022-10-10'
   0.0.2:
     release_date: '2022-11-30'
+  0.0.3:
+    release_date: '2023-04-18'
