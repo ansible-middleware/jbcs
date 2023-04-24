@@ -28,6 +28,7 @@ warn_list:
   - meta-no-tags
   - name[template]
   - task_has_valid_name
+  - schema[meta]
 
 skip_list:
   - vars_should_not_be_used
