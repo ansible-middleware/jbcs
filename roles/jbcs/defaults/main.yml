@@ -2,7 +2,8 @@
 jbcs_ssl_enable: true
 jbcs_ssl_port: 443
 
-jbcs_bundle: jbcs-httpd24-httpd-2.4.37-SP11-RHEL8-x86_64.zip
+jbcs_version: '2.4.37-SP11'
+jbcs_bundle: "jbcs-httpd24-httpd-{{ jbcs_version }}-RHEL8-x86_64.zip"
 jbcs_zip_path: /opt/apps 
 
 jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/
@@ -23,3 +24,5 @@ jbcs_group_id: 48
 jbcs_service_name: jbcs
 
 jbcs_external_domain_name: "{{ ansible_nodename }}"
+
+jbcs_offline_install: True

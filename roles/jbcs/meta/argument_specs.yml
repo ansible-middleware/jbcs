@@ -1,6 +1,11 @@
 argument_specs:
     main:
         options:
+            jbcs_offline_install:
+                # line 2 of jbcs/defaults/main.yml
+                default: true
+                description: "Whether to install zipfiles from controller directory"
+                type: "bool"
             jbcs_ssl_enable:
                 # line 2 of jbcs/defaults/main.yml
                 default: true
@@ -11,9 +16,13 @@ argument_specs:
                 default: 443
                 description: "SSL listen port"
                 type: "int"
+            jbcs_version:
+                default: "2.4.37-SP11"
+                description: "Version of JBCS install archive"
+                type: "str"
             jbcs_bundle:
                 # line 5 of jbcs/defaults/main.yml
-                default: "jbcs-httpd24-httpd-2.4.37-SP11-RHEL8-x86_64.zip"
+                default: "jbcs-httpd24-httpd-{{ jbcs_version }}-RHEL8-x86_64.zip"
                 description: "Filename of JBCS install archive"
                 type: "str"
             jbcs_zip_path:

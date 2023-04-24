@@ -65,14 +65,9 @@
   register: local_archive_path
   delegate_to: localhost
 
-- name: Download JBoss Core Services from CSP
-  redhat.redhat_csp_download.redhat_csp_download:
-    url: "https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=104386&product=core.service.apachehttp"
-    dest: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
-    username: "{{ rhn_username }}"
-    password: "{{ rhn_password }}"
-  no_log: "{{ omit_rhn_output | default(true) }}"
-  delegate_to: localhost    
+- name: Download JBCS from RHN using JBoss Network API
+  delegate_to: localhost
+  run_once: yes
   when:
     - not jbcs_installed is defined
     - archive_path is defined
@@ -80,6 +75,35 @@
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - not local_archive_path.stat.exists
+    - not jbcs_offline_install
+    - rhn_username is defined and rhn_password is defined
+  block:
+    - name: Retrieve product download using JBoss Network API
+      middleware_automation.common.product_search:
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_type: SECURITY
+        product_version: "{{ jbcs_version.split('-')[0] }}"
+        product_category: "core.service.apachehttp"
+      register: rhn_products
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Determine install zipfile from search results
+      ansible.builtin.set_fact:
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + jbcs_version + '-RHEL8-x86_64.zip') }}"
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Download JBCS
+      middleware_automation.common.product_download:
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_id: "{{ (rhn_filtered_products | first).id }}"
+        dest: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
+      run_once: yes
 
 - name: Check downloaded archive
   ansible.builtin.stat:
