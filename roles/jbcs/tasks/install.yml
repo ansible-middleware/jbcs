@@ -159,11 +159,11 @@
     - "Restart JBCS"
 
 - name: Ensure JBCS configuration is correct
-  ansible.builtin.command:
-    command: "mv {{ item }} {{ item }}.bak"
+  ansible.builtin.command: "mv {{ item }} {{ item }}.bak"
   args:
     removes: "{{ item }}"
     creates: "{{ item }}.bak"
+    chdir: "{{ httpd.home }}/httpd/conf.d/"
   when: new_version_downloaded.changed or not path_to_workdir.stat.exists
   loop:
     - welcome.conf
