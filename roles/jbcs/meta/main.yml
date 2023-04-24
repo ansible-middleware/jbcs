@@ -1,7 +1,7 @@
 ---
 collections:
   - middleware_automation.common
-s
+
 galaxy_info:
   role_name: jbcs
   namespace: middleware_automation
