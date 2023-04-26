@@ -192,8 +192,8 @@
   - name: remove bundled configs
     ansible.builtin.command: "mv mod_cluster.conf mod_cluster.conf.bak"
     args:
-      removes: "{{ item }}"
-      creates: "{{ item }}.bak"
+      removes: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf"
+      creates: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf.bak"
       chdir: "{{ httpd.home }}/httpd/conf.d/"
     when: not item_stat.stat.exists
   - name: remove bundled configs
