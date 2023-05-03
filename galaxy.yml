@@ -6,7 +6,7 @@ readme: README.md
 authors:
   - Romain Pelisse <rpelisse@redhat.com>
   - Guido Grazioli <ggraziol@redhat.com>
-description: Install and configure a JBoss Core Service server.
+description: Install and configure a JBoss Core Services server.
 license_file: "LICENSE"
 tags:
   - httpd
@@ -15,6 +15,9 @@ tags:
   - jboss
   - infrastructure
   - server
+  - runtimes
+  - middleware
+  - a4mw
 dependencies:
   "middleware_automation.common": ">=1.1.0"
   "ansible.posix": ">=1.4.0"
