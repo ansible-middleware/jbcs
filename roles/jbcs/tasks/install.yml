@@ -182,29 +182,16 @@
   notify:
     - "Restart JBCS"
 
-- name: Ensure JBCS configuration is correct
+- name: Ensure JBCS module configuration is correct
   become: yes
-  block:
-  - name: check bundled configs
-    ansible.builtin.stat:
-      path: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf.bak"
-    register: item_stat
-  - name: remove bundled configs
-    ansible.builtin.command: "mv mod_cluster.conf mod_cluster.conf.bak"
-    args:
-      removes: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf"
-      creates: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf.bak"
-      chdir: "{{ httpd.home }}/httpd/conf.d/"
-    when: not item_stat.stat.exists
-  - name: remove bundled configs
-    ansible.builtin.command: "mv {{ item }} {{ item }}.bak"
-    args:
-      removes: "{{ item }}"
-      creates: "{{ item }}.bak"
-      chdir: "{{ httpd.home }}/httpd/conf.d/"
-    failed_when: false
-    changed_when: false
-    loop:
-      - manual.conf
-      - welcome.conf
+  ansible.builtin.command: "mv {{ item }} {{ item }}.bak"
+  args:
+    removes: "{{ item }}"
+    creates: "{{ item }}.bak"
+    chdir: "{{ httpd.home }}/httpd/conf.d/"
+  failed_when: false
+  changed_when: false
+  loop:
+    - manual.conf
+    - welcome.conf
 

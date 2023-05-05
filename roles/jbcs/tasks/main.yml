@@ -22,9 +22,6 @@
 - name: Import SSL configuration tasks
   ansible.builtin.include_tasks: ssl.yml
 
-- name: Flush handlers
-  meta: flush_handlers
-
 - name: "Ensures mod_cluster configuration is deployed"
   ansible.builtin.template:
     src: templates/mod_cluster.conf.j2
