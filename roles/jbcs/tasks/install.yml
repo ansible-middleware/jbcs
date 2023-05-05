@@ -194,4 +194,3 @@
   loop:
     - manual.conf
     - welcome.conf
-
