@@ -8,3 +8,5 @@ releases:
     release_date: '2023-04-18'
   1.0.0:
     release_date: '2023-04-24'
+  1.0.1:
+    release_date: '2023-06-09'
