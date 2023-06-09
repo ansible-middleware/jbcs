@@ -100,7 +100,7 @@
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_id: "{{ (rhn_filtered_products | first).id }}"
-        dest: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
+        dest: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: yes
