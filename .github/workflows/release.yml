@@ -24,9 +24,10 @@ jobs:
           token: ${{ secrets.TRIGGERING_PAT }}
 
       - name: Set up Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
+          cache: 'pip'
 
       - name: Get current version
         id: get_version
@@ -91,7 +92,7 @@ jobs:
     needs: release
     strategy:
       matrix:
-        repo: ['ansible-middleware/cross-dc-rhsso-demo', 'ansible-middleware/flange-demo']
+        repo: ['ansible-middleware/cross-dc-rhsso-demo', 'ansible-middleware/flange-demo', 'ansible-middleware/ansible-middleware-ee']
     runs-on: ubuntu-latest
     steps:
       - name: Repository Dispatch
