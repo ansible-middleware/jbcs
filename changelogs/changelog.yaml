@@ -6,3 +6,16 @@ releases:
     release_date: '2023-06-09'
   1.0.2:
     release_date: '2023-06-09'
+  1.0.3:
+    changes:
+      minor_changes:
+      - 'Add comprehensive molecule test `#2 <https://github.com/ansible-middleware/jbcs/pull/2>`_
+
+        '
+      - 'Add firewalld configuration flag `#1 <https://github.com/ansible-middleware/jbcs/pull/1>`_
+
+        '
+    fragments:
+    - 1.yaml
+    - 2.yaml
+    release_date: '2023-08-29'
