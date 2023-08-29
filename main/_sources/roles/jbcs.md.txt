@@ -24,7 +24,7 @@ Role Defaults
 |`jbcs_home`| Home directory | `/opt/jbcs/jbcs-httpd24-2.4/` |
 |`jbcs_bind_address`| Bind address | `localhost` |
 |`jbcs_listen_port`| HTTP listen port | `80` |
-|`jbcs_mod_cluster_enable`| Enable modcluster module | `False` |
+|`jbcs_mod_cluster_enable`| Enable modcluster module | `True` |
 |`jbcs_mod_cluster_port`| Modcluster advertise port | `6666` |
 |`jbcs_mod_cluster_require`| Require argument for modcluster location | `all granted` |
 |`jbcs_mod_cluster_balancer`| Balancer name for modcluster cluster | `loadbalancer` |
