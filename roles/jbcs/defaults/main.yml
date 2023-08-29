@@ -11,7 +11,7 @@ jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/
 jbcs_bind_address: "localhost"
 jbcs_listen_port: 80
 
-jbcs_mod_cluster_enable: false
+jbcs_mod_cluster_enable: True
 jbcs_mod_cluster_port: 6666
 jbcs_mod_cluster_require: "all granted"
 jbcs_mod_cluster_balancer: loadbalancer

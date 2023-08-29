@@ -47,7 +47,7 @@ argument_specs:
                 type: "int"
             jbcs_mod_cluster_enable:
                 # line 13 of jbcs/defaults/main.yml
-                default: false
+                default: true
                 description: "Enable modcluster module"
                 type: "bool"
             jbcs_mod_cluster_port:

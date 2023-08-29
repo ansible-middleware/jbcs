@@ -2,6 +2,12 @@
 - name: Verify
   hosts: all
   tasks:
-    - name: foo
-      ansible.builtin.debug:
-        msg: "bar"
+    - name: Test port 80 redirect to 443
+      ansible.builtin.uri:
+        url: http://localhost
+        method: GET
+        status_code: 200
+        validate_certs: False
+        return_content: true
+      register: this
+      failed_when: this is failed or 'Index of /' not in this.content or not this.redirected
