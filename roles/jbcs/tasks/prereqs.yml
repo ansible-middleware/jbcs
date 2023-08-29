@@ -5,7 +5,6 @@
     packages_list:
       - unzip
       - procps-ng
-      - firewalld
 
 - name: Ensure that firewalld service is running
   become: true

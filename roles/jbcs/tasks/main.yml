@@ -2,19 +2,9 @@
 - name: Include prereq trasks
   ansible.builtin.include_tasks: prereqs.yml
 
-- name: Configure firewall for JBCS ports
-  become: yes
-  ansible.posix.firewalld:
-    port: "{{ port }}"
-    permanent: true
-    state: enabled
-    immediate: yes
-  loop:
-    - "{{ jbcs_listen_port }}/tcp"
-    - "{{ jbcs_ssl_port }}/tcp"
-    - "{{ jbcs_mod_cluster_port }}/tcp"
-  loop_control:
-    loop_var: port
+- name: Import firewalld tasks
+  ansible.builtin.include_tasks: firewalld.yml
+  when: jbcs_configure_firewalld
 
 - name: Import install tasks
   ansible.builtin.include_tasks: install.yml
@@ -43,10 +33,10 @@
 - name: "Wait for all used ports to be open"
   ansible.builtin.wait_for:
     port: "{{ item }}"
-    delay: 0
+    delay: 2
   loop:
-    - 80
-    - 443
-    - 6666
+    - "{{ jbcs_listen_port }}"
+    - "{{ jbcs_ssl_port }}"
+    - "{{ jbcs_mod_cluster_port }}"
   when:
-    - check_jbcs_port is defined
+    - jbcs_port_check is defined and jbcs_port_check

@@ -26,3 +26,6 @@ jbcs_service_name: jbcs
 jbcs_external_domain_name: "{{ ansible_nodename }}"
 
 jbcs_offline_install: True
+
+jbcs_configure_firewalld: True
+jbcs_port_check: False

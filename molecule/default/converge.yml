@@ -1,7 +1,8 @@
 ---
 - name: Converge
   hosts: all
-  collections:
-    - middleware_automation.jbcs
+  vars:
+    jbcs_configure_firewalld: False
   roles:
-    - jbcs
+    - middleware_automation.jbcs.jbcs
+
