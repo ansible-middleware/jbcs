@@ -9,6 +9,11 @@ This changelog describes changes after version 1.0.0.
 v1.0.3-devel
 ============
 
+Minor Changes
+-------------
+
+- Add firewalld configuration flag `#1 <https://github.com/ansible-middleware/jbcs/pull/1>`_
+
 v1.0.2
 ======
 
