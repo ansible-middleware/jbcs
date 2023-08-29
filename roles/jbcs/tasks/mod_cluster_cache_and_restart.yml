@@ -17,7 +17,7 @@
       ansible.builtin.file:
         path: "{{ httpd.home }}/httpd/cache/mod_cluster/"
         state: absent
-    
+
     - name: Start JBCS
       ansible.builtin.service:
         name: "{{ jbcs_service_name }}.service"

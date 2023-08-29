@@ -5,6 +5,13 @@
     packages_list:
       - firewalld
 
+- name: Ensure that firewalld service is running
+  become: true
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+
 - name: Configure firewall for JBCS ports
   become: yes
   ansible.posix.firewalld:
