@@ -1,0 +1,27 @@
+---
+- name: Include install packages
+  ansible.builtin.include_tasks: fastpackages.yml
+  vars:
+    packages_list:
+      - firewalld
+
+- name: Ensure that firewalld service is running
+  become: true
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: Configure firewall for JBCS ports
+  become: yes
+  ansible.posix.firewalld:
+    port: "{{ port }}"
+    permanent: true
+    state: enabled
+    immediate: yes
+  loop:
+    - "{{ jbcs_listen_port }}/tcp"
+    - "{{ jbcs_ssl_port }}/tcp"
+    - "{{ jbcs_mod_cluster_port }}/tcp"
+  loop_control:
+    loop_var: port

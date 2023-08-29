@@ -34,7 +34,8 @@ Role Defaults
 |`jbcs_group_id`| POSIX gid for service | `48` |
 |`jbcs_service_name`| Name of systemd service | `jbcs` |
 |`jbcs_external_domain_name`| Name for virtualhost ServerName directive | `{{ ansible_nodename }}` |
-
+|`jbcs_configure_firewalld`| Whether to configure firewalld ports for jbcs | `True` |
+|`jbcs_port_check`| Whether to check open ports at end of playbook | `False` |
 
 
 Role Variables

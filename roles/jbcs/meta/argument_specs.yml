@@ -95,3 +95,18 @@ argument_specs:
                 default: "{{ ansible_nodename }}"
                 description: "Name for virtualhost ServerName directive"
                 type: "str"
+            jbcs_configure_firewalld:
+                default: True
+                description: "Whether to configure firewalld ports for jbcs"
+                type: "bool"
+            jbcs_port_check:
+                default: False
+                description: "Whether to check open ports at end of playbook"
+                type: "bool"
+    downstream:
+        options:
+            jbcs_offline_install:
+                # line 2 of jbcs/defaults/main.yml
+                default: false
+                description: "Whether to install zipfiles from controller directory"
+                type: "bool"

@@ -5,11 +5,3 @@
     packages_list:
       - unzip
       - procps-ng
-      - firewalld
-
-- name: Ensure that firewalld service is running
-  become: true
-  ansible.builtin.systemd:
-    name: firewalld
-    enabled: yes
-    state: started
