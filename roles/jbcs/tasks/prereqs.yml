@@ -5,3 +5,4 @@
     packages_list:
       - unzip
       - procps-ng
+      - mailcap
