@@ -1,7 +1,7 @@
 .. Red Hat middleware_automation jbcs Ansible Collection documentation main file
 
 Welcome to JBCS Collection documentation
-============================================
+========================================
 
 .. toctree::
    :maxdepth: 2
