@@ -103,3 +103,10 @@ argument_specs:
                 default: False
                 description: "Whether to check open ports at end of playbook"
                 type: "bool"
+    downstream:
+        options:
+            jbcs_offline_install:
+                # line 2 of jbcs/defaults/main.yml
+                default: false
+                description: "Whether to install zipfiles from controller directory"
+                type: "bool"
