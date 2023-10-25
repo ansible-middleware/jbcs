@@ -36,6 +36,7 @@ Role Defaults
 |`jbcs_external_domain_name`| Name for virtualhost ServerName directive | `{{ ansible_nodename }}` |
 |`jbcs_configure_firewalld`| Whether to configure firewalld ports for jbcs | `True` |
 |`jbcs_port_check`| Whether to check open ports at end of playbook | `False` |
+|`jbcs_proxy_pass`| List of proxy pass directives/options. Element keys: path, url, reverse_path, reverse_url | `[]` |
 
 
 Role Variables
