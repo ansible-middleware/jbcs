@@ -103,6 +103,10 @@ argument_specs:
                 default: False
                 description: "Whether to check open ports at end of playbook"
                 type: "bool"
+            jbcs_proxy_pass:
+                default: []
+                description: "List of proxy pass directives/options. Element keys: path, url, reverse_path, reverse_url"
+                type: "list"
     downstream:
         options:
             jbcs_offline_install:
