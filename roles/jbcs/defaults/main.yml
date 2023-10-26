@@ -29,3 +29,5 @@ jbcs_offline_install: True
 
 jbcs_configure_firewalld: True
 jbcs_port_check: False
+
+jbcs_proxy_pass: []
