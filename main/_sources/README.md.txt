@@ -33,11 +33,11 @@ collections:
   - name: middleware_automation.jbcs
 ```
 
-
+<!--start roles_paths -->
 ### Included roles
 
 * [`jbcs`](https://github.com/ansible-middleware/jbcs/blob/main/roles/jbcs/README.md): role for installing the service.
-
+<!--end roles_paths -->
 
 ### Usage
 
