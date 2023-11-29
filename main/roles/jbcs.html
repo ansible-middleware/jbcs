@@ -3,7 +3,7 @@
 <html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>jbcs &#8212; jbcs Ansible Collection  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5707b69d" />
@@ -194,67 +194,71 @@
 <td class="text-left"><p>Destination for install archive download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/apps</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_home</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_offline_install</span></code></p></td>
+<td class="text-left"><p>Whether to use local archive or download one</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_home</span></code></p></td>
 <td class="text-left"><p>Home directory</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/jbcs/jbcs-httpd24-2.4/</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_bind_address</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_bind_address</span></code></p></td>
 <td class="text-left"><p>Bind address</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">localhost</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_listen_port</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_listen_port</span></code></p></td>
 <td class="text-left"><p>HTTP listen port</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">80</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_enable</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_enable</span></code></p></td>
 <td class="text-left"><p>Enable modcluster module</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_port</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_port</span></code></p></td>
 <td class="text-left"><p>Modcluster advertise port</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">6666</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_require</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_require</span></code></p></td>
 <td class="text-left"><p>Require argument for modcluster location</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">all</span> <span class="pre">granted</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_balancer</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_mod_cluster_balancer</span></code></p></td>
 <td class="text-left"><p>Balancer name for modcluster cluster</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">loadbalancer</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_user</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_user</span></code></p></td>
 <td class="text-left"><p>POSIX user for service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">apache</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_user_id</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_user_id</span></code></p></td>
 <td class="text-left"><p>POSIX uid for service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">48</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_group</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_group</span></code></p></td>
 <td class="text-left"><p>POSIX group for service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">apache</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_group_id</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_group_id</span></code></p></td>
 <td class="text-left"><p>POSIX gid for service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">48</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_service_name</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_service_name</span></code></p></td>
 <td class="text-left"><p>Name of systemd service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_external_domain_name</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_external_domain_name</span></code></p></td>
 <td class="text-left"><p>Name for virtualhost ServerName directive</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ansible_nodename</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_configure_firewalld</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_configure_firewalld</span></code></p></td>
 <td class="text-left"><p>Whether to configure firewalld ports for jbcs</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_port_check</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_port_check</span></code></p></td>
 <td class="text-left"><p>Whether to check open ports at end of playbook</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_proxy_pass</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_proxy_pass</span></code></p></td>
 <td class="text-left"><p>List of proxy pass directives/options. Element keys: path, url, reverse_path, reverse_url</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 </tr>
