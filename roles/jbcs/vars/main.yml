@@ -1,14 +1,14 @@
 ---
 httpd:
-  bind_address: "{{ jbcs_bind_address }}"
-  listen_port: "{{ jbcs_listen_port }}"
+  bind_address: "{{ bind_address }}"
+  listen_port: "{{ listen_port }}"
   mod_cluster:
-    enable: "{{ jbcs_mod_cluster_enable }}"
-    port: "{{ jbcs_mod_cluster_port }}"
-    require: "{{ jbcs_mod_cluster_require }}"
-  home: "{{ jbcs_home }}"
+    enable: "{{ mod_cluster_enable }}"
+    port: "{{ mod_cluster_port }}"
+    require: "{{ mod_cluster_require }}"
+  home: "{{ home }}"
   user:
-    name: "{{ jbcs_user }}"
+    name: "{{ user }}"
   group:
-    name: "{{ jbcs_group }}"
-    id: "{{ jbcs_group_id }}"
+    name: "{{ group }}"
+    id: "{{ group_id }}"

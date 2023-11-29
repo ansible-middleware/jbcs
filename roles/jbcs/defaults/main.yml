@@ -1,36 +1,36 @@
 ---
-jbcs_ssl_enable: true
-jbcs_ssl_port: 443
+ssl_enable: true
+ssl_port: 443
 
-jbcs_version: '2.4.57'
-jbcs_distro: RHEL8
-jbcs_arch: x86_64
+version: '2.4.57'
+distro: RHEL8
+arch: x86_64
 
-jbcs_bundle: "jbcs-httpd24-httpd-{{ jbcs_version }}-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
-jbcs_zip_path: /opt/apps/
+bundle: "jbcs-httpd24-httpd-{{ version }}-{{ distro }}-{{ arch }}.zip"
+zip_path: /opt/apps/
 
-jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/
+home: /opt/jbcs/jbcs-httpd24-2.4/
 
-jbcs_bind_address: "localhost"
-jbcs_listen_port: 80
+bind_address: "localhost"
+listen_port: 80
 
-jbcs_mod_cluster_enable: true
-jbcs_mod_cluster_port: 6666
-jbcs_mod_cluster_require: "all granted"
-jbcs_mod_cluster_balancer: loadbalancer
+mod_cluster_enable: true
+mod_cluster_port: 6666
+mod_cluster_require: "all granted"
+mod_cluster_balancer: loadbalancer
 
-jbcs_user: apache
-jbcs_user_id: 48
-jbcs_group: apache
-jbcs_group_id: 48
+user: apache
+user_id: 48
+group: apache
+group_id: 48
 
-jbcs_service_name: jbcs
+service_name: jbcs
 
-jbcs_external_domain_name: "{{ ansible_nodename }}"
+external_domain_name: "{{ ansible_nodename }}"
 
-jbcs_offline_install: true
+offline_install: true
 
-jbcs_configure_firewalld: true
-jbcs_port_check: false
+configure_firewalld: true
+port_check: false
 
-jbcs_proxy_pass: []
+proxy_pass: []

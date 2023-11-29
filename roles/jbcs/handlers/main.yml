@@ -2,7 +2,7 @@
 - name: "Restart JBCS"
   become: true
   ansible.builtin.service:
-    name: "{{ jbcs_service_name }}.service"
+    name: "{{ service_name }}.service"
     state: restarted
 
 - name: "Expire mod_cluster cache and restart"

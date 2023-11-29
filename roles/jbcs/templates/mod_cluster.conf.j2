@@ -20,9 +20,9 @@ SSLProxyCheckPeerName off
 <VirtualHost *:80>
   ProxyPreserveHost On
   ProxyRequests Off
-  ServerName {{ jbcs_external_domain_name }}
+  ServerName {{ external_domain_name }}
   ServerAlias {{ ansible_nodename }}
-  Redirect permanent / https://{{ jbcs_external_domain_name }}/
+  Redirect permanent / https://{{ external_domain_name }}/
 </VirtualHost>
 
 <IfModule manager_module>
@@ -39,7 +39,7 @@ SSLProxyCheckPeerName off
     AdvertiseFrequency 5
     EnableMCPMReceive
 
-    ManagerBalancerName "{{ jbcs_mod_cluster_balancer }}"
+    ManagerBalancerName "{{ mod_cluster_balancer }}"
     CreateBalancers 0
     LogLevel info
     ErrorLog logs/modcluster.log

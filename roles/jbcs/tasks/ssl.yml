@@ -26,7 +26,7 @@
 
 - name: Disable SSL tasks
   become: true
-  when: not jbcs_ssl_enable
+  when: not ssl_enable
   block:
     - name: "Disabled SSL"
       ansible.builtin.file:
@@ -47,7 +47,7 @@
 
 - name: Enable SSL tasks
   become: true
-  when: jbcs_ssl_enable
+  when: ssl_enable
   block:
     - name: "Ensures HTTPd SSL configuration is deployed"
       ansible.builtin.template:

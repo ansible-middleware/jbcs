@@ -4,7 +4,7 @@
 
 - name: Import firewalld tasks
   ansible.builtin.include_tasks: firewalld.yml
-  when: jbcs_configure_firewalld
+  when: configure_firewalld
 
 - name: Import install tasks
   ansible.builtin.include_tasks: install.yml
@@ -20,14 +20,14 @@
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: 0640
-  when: jbcs_mod_cluster_enable
+  when: mod_cluster_enable
   notify:
     - 'Expire mod_cluster cache and restart'
 
 - name: "Start HTTPd Service"
   become: true
   ansible.builtin.service:
-    name: "{{ jbcs_service_name }}.service"
+    name: "{{ service_name }}.service"
     state: started
     enabled: true
 
@@ -36,8 +36,8 @@
     port: "{{ item }}"
     delay: 2
   loop:
-    - "{{ jbcs_listen_port }}"
-    - "{{ jbcs_ssl_port }}"
-    - "{{ jbcs_mod_cluster_port }}"
+    - "{{ listen_port }}"
+    - "{{ ssl_port }}"
+    - "{{ mod_cluster_port }}"
   when:
-    - jbcs_port_check is defined and jbcs_port_check
+    - port_check is defined and port_check

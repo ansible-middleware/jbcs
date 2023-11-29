@@ -10,7 +10,7 @@
 
     - name: Stop JBCS
       ansible.builtin.service:
-        name: "{{ jbcs_service_name }}.service"
+        name: "{{ service_name }}.service"
         state: stopped
 
     - name: Clear modcluster cache
@@ -20,5 +20,5 @@
 
     - name: Start JBCS
       ansible.builtin.service:
-        name: "{{ jbcs_service_name }}.service"
+        name: "{{ service_name }}.service"
         state: started

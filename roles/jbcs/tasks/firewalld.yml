@@ -20,8 +20,8 @@
     state: enabled
     immediate: true
   loop:
-    - "{{ jbcs_listen_port }}/tcp"
-    - "{{ jbcs_ssl_port }}/tcp"
-    - "{{ jbcs_mod_cluster_port }}/tcp"
+    - "{{ listen_port }}/tcp"
+    - "{{ ssl_port }}/tcp"
+    - "{{ mod_cluster_port }}/tcp"
   loop_control:
     loop_var: port

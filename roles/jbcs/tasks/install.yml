@@ -38,7 +38,7 @@
 - name: Create directory for zipfile
   become: true
   ansible.builtin.file:
-    path: "{{ jbcs_zip_path }}"
+    path: "{{ zip_path }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: 0750
@@ -47,7 +47,7 @@
 ## check remote archive
 - name: Set download archive path
   ansible.builtin.set_fact:
-    archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
+    archive: "{{ zip_path }}/{{ bundle }}"
 
 - name: Check download archive path
   become: true
@@ -64,7 +64,7 @@
 
 - name: Check downloaded archive
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+    path: "{{ local_path.stat.path }}/{{ bundle }}"
   register: local_archive_path
   delegate_to: localhost
 
@@ -72,13 +72,13 @@
   delegate_to: localhost
   run_once: true
   when:
-    - not jbcs_installed is defined
+    - not installed is defined
     - archive_path is defined
     - archive_path.stat is defined
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - not local_archive_path.stat.exists
-    - not jbcs_offline_install
+    - not offline_install
     - rhn_username is defined and rhn_password is defined
   block:
     - name: Retrieve product download using JBoss Network API
@@ -86,7 +86,7 @@
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_type: DISTRIBUTION
-        product_version: "{{ jbcs_version.split('-')[0] }}"
+        product_version: "{{ version.split('-')[0] }}"
         product_category: "core.service.apachehttp"
       register: rhn_products
       delegate_to: localhost
@@ -94,7 +94,7 @@
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + jbcs_version + '-' + jbcs_distro + '-' + jbcs_arch + '.zip') }}"
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + version + '-' + distro + '-' + arch + '.zip') }}"
       delegate_to: localhost
       run_once: true
 
@@ -103,21 +103,21 @@
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_id: "{{ (rhn_filtered_products | first).id }}"
-        dest: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+        dest: "{{ local_path.stat.path }}/{{ bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: true
 
 - name: Check downloaded archive
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+    path: "{{ local_path.stat.path }}/{{ bundle }}"
   register: local_archive_path
   delegate_to: localhost
 
 ## copy and unpack
 - name: Copy archive to target nodes
   ansible.builtin.copy:
-    src: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+    src: "{{ local_path.stat.path }}/{{ bundle }}"
     dest: "{{ archive }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
@@ -159,7 +159,7 @@
   become: true
   ansible.builtin.template:
     src: templates/jbcs-httpd24-httpd.service.j2
-    dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
+    dest: "/usr/lib/systemd/system/{{ service_name }}.service"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: 0640

@@ -5,7 +5,7 @@
 # directives see <URL:http://httpd.apache.org/docs/2.4/mod/mod_ssl.html>
 #
 
-Listen {{ jbcs_ssl_port }}
+Listen {{ ssl_port }}
 
 AddType application/x-x509-ca-cert .crt
 AddType application/x-pkcs7-crl    .crl
@@ -22,7 +22,7 @@ SSLRandomSeed connect builtin
 
 SSLCryptoDevice builtin
 
-<VirtualHost _default_:{{ jbcs_ssl_port }}>
+<VirtualHost _default_:{{ ssl_port }}>
 
 ErrorLog logs/ssl_error_log
 TransferLog logs/ssl_access_log
@@ -35,8 +35,8 @@ SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
 #SSLCipherSuite RC4-SHA:AES128-SHA:HIGH:MEDIUM:!aNULL:!MD5
 #SSLHonorCipherOrder on
 
-SSLCertificateFile /etc/pki/tls/certs/{{ jbcs_external_domain_name }}.crt
-SSLCertificateKeyFile /etc/pki/tls/private/{{ jbcs_external_domain_name }}.key
+SSLCertificateFile /etc/pki/tls/certs/{{ external_domain_name }}.crt
+SSLCertificateKeyFile /etc/pki/tls/private/{{ external_domain_name }}.key
 
 <Files ~ \.(cgi|shtml|phtml|php3?)$>
     SSLOptions +StdEnvVars
@@ -49,15 +49,15 @@ BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-r
 
 CustomLog logs/ssl_request_log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
-{% if jbcs_mod_cluster_enable %}
+{% if mod_cluster_enable %}
 <Location /mcm>
     SetHandler mod_cluster-manager
     Require all granted
 </Location>
 {% endif %}
 
-{% if jbcs_proxy_pass | default([]) | length > 0 %}
-{% for proxy in jbcs_proxy_pass %}
+{% if proxy_pass | default([]) | length > 0 %}
+{% for proxy in proxy_pass %}
         HostnameLookups Off
         UseCanonicalName Off
         ProxyPreserveHost On

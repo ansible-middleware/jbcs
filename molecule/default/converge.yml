@@ -2,9 +2,9 @@
 - name: Converge
   hosts: all
   vars:
-    jbcs_configure_firewalld: False
-    jbcs_offline_install: False
-    jbcs_bind_address: '*'
+    configure_firewalld: False
+    offline_install: False
+    bind_address: '*'
     omit_rhn_output: False
     rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
     rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
