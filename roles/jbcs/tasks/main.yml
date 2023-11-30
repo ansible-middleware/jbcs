@@ -13,6 +13,7 @@
   ansible.builtin.include_tasks: ssl.yml
 
 - name: "Ensures mod_cluster configuration is deployed"
+  become: yes
   ansible.builtin.template:
     src: templates/mod_cluster.conf.j2
     dest: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf"
