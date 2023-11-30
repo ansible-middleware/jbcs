@@ -19,7 +19,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`jbcs_ssl_enable`| Enable SSL | `True` |
 |`jbcs_ssl_port`| SSL listen port | `443` |
-|`jbcs_bundle`| Filename of JBCS install archive | `jbcs-httpd24-httpd-2.4.37-SP11-RHEL8-x86_64.zip` |
+|`jbcs_bundle`| Filename of JBCS install archive | `jbcs-httpd24-httpd-2.4.57-RHEL8-x86_64.zip` |
 |`jbcs_zip_path`| Destination for install archive download | `/opt/apps` |
 |`jbcs_offline_install`| Whether to use local archive or download one | `True` |
 |`jbcs_home`| Home directory | `/opt/jbcs/jbcs-httpd24-2.4/` |

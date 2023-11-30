@@ -2,7 +2,7 @@
 jbcs_ssl_enable: true
 jbcs_ssl_port: 443
 
-jbcs_version: '2.4.37-SP11'
+jbcs_version: '2.4.57'
 jbcs_bundle: "jbcs-httpd24-httpd-{{ jbcs_version }}-RHEL8-x86_64.zip"
 jbcs_zip_path: /opt/apps/
 
