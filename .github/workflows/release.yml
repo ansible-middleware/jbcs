@@ -6,15 +6,18 @@ on:
 jobs:
   release:
     uses: ansible-middleware/github-actions/.github/workflows/release.yml@main
-    secrets: inherit
+    secrets:
+      galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
+      jira_webhook: ${{ secrets.JIRA_WEBHOOK_CREATE_VERSION }}
     with:
       collection_fqcn: 'middleware_automation.jbcs'
+      downstream_name: 'jbcs'
 
   dispatch:
     needs: release
     strategy:
       matrix:
-        repo: ['ansible-middleware/cross-dc-rhsso-demo', 'ansible-middleware/flange-demo', 'ansible-middleware/ansible-middleware-ee']
+        repo: ['ansible-middleware/ansible-middleware-ee']
     runs-on: ubuntu-latest
     steps:
       - name: Repository Dispatch
