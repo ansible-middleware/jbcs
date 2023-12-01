@@ -11,6 +11,7 @@
     quiet: true
 
 - name: Create group
+  become: true
   ansible.builtin.group:
     name: "{{ httpd.group.name }}"
     state: present
@@ -18,6 +19,7 @@
     system: true
 
 - name: Create user
+  become: true
   ansible.builtin.user:
     name: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
@@ -34,6 +36,7 @@
   changed_when: false
 
 - name: Create directory for zipfile
+  become: true
   ansible.builtin.file:
     path: "{{ jbcs_zip_path }}"
     owner: "{{ httpd.user.name }}"
@@ -153,6 +156,7 @@
     - not new_version_downloaded.changed and path_to_workdir.stat.exists
 
 - name: Post install HTTPD
+  become: yes
   ansible.builtin.template:
     src: templates/jbcs-httpd24-httpd.service.j2
     dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
@@ -163,24 +167,20 @@
     - "Reload systemd"
 
 - name: Ensure JBCS configuration is correct
+  become: yes
+  notify:
+    - "Restart JBCS"
+  loop:
+    - name: 00-base.conf
+      dest: "{{ httpd.home }}/httpd/conf.modules.d"
+    - name: httpd.conf
+      dest:  "{{ httpd.home }}/httpd/conf"
   ansible.builtin.template:
-    src: templates/00-base.conf.j2
-    dest: "{{ httpd.home }}/httpd/conf.modules.d/00-base.conf"
+    src: "templates/{{ item.name }}.j2"
+    dest: "{{ item.dest }}/{{ item.name }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: 0640
-  notify:
-    - "Restart JBCS"
-
-- name: Ensure JBCS configuration is correct
-  ansible.builtin.template:
-    src: templates/httpd.conf.j2
-    dest: "{{ httpd.home }}/httpd/conf/httpd.conf"
-    owner: "{{ httpd.user.name }}"
-    group: "{{ httpd.group.name }}"
-    mode: 0640
-  notify:
-    - "Restart JBCS"
 
 - name: Ensure JBCS module configuration is correct
   become: yes
