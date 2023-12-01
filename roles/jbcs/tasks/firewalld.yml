@@ -9,16 +9,16 @@
   become: true
   ansible.builtin.systemd:
     name: firewalld
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Configure firewall for JBCS ports
-  become: yes
+  become: true
   ansible.posix.firewalld:
     port: "{{ port }}"
     permanent: true
     state: enabled
-    immediate: yes
+    immediate: true
   loop:
     - "{{ jbcs_listen_port }}/tcp"
     - "{{ jbcs_ssl_port }}/tcp"
