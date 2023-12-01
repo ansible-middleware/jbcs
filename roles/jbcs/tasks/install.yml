@@ -50,7 +50,7 @@
     archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
 
 - name: Check download archive path
-  become: yes
+  become: true
   ansible.builtin.stat:
     path: "{{ archive }}"
   register: archive_path
@@ -70,7 +70,7 @@
 
 - name: Download JBCS from RHN using JBoss Network API
   delegate_to: localhost
-  run_once: yes
+  run_once: true
   when:
     - not jbcs_installed is defined
     - archive_path is defined
@@ -90,13 +90,13 @@
         product_category: "core.service.apachehttp"
       register: rhn_products
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
         rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + jbcs_version + '-' + jbcs_distro + '-' + jbcs_arch + '.zip') }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: Download JBCS
       middleware_automation.common.product_download:
@@ -106,7 +106,7 @@
         dest: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
 - name: Check downloaded archive
   ansible.builtin.stat:
@@ -127,23 +127,23 @@
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: yes
+  become: true
 
 - name: "Check target directory: {{ httpd.home }}"
   ansible.builtin.stat:
     path: "{{ httpd.home }}"
   register: path_to_workdir
-  become: yes
+  become: true
 
 - name: Extract JBCS archive on target
   ansible.builtin.unarchive:
-    remote_src: yes
+    remote_src: true
     src: "{{ archive }}"
     dest: /opt/jbcs/
     creates: "{{ httpd.home }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-  become: yes
+  become: true
   when:
     - new_version_downloaded.changed or not path_to_workdir.stat.exists
   notify:
@@ -156,7 +156,7 @@
     - not new_version_downloaded.changed and path_to_workdir.stat.exists
 
 - name: Post install HTTPD
-  become: yes
+  become: true
   ansible.builtin.template:
     src: templates/jbcs-httpd24-httpd.service.j2
     dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
@@ -167,7 +167,7 @@
     - "Reload systemd"
 
 - name: Ensure JBCS configuration is correct
-  become: yes
+  become: true
   notify:
     - "Restart JBCS"
   loop:
@@ -183,7 +183,7 @@
     mode: 0640
 
 - name: Ensure JBCS module configuration is correct
-  become: yes
+  become: true
   ansible.builtin.command: "mv {{ item }} {{ item }}.bak"
   args:
     removes: "{{ item }}"

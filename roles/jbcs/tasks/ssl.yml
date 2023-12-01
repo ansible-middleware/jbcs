@@ -25,7 +25,7 @@
   register: ssl_conf_disabled_file
 
 - name: Disable SSL tasks
-  become: yes
+  become: true
   when: not jbcs_ssl_enable
   block:
     - name: "Disabled SSL"
@@ -46,7 +46,7 @@
         state: absent
 
 - name: Enable SSL tasks
-  become: yes
+  become: true
   when: jbcs_ssl_enable
   block:
     - name: "Ensures HTTPd SSL configuration is deployed"

@@ -13,7 +13,7 @@
   ansible.builtin.include_tasks: ssl.yml
 
 - name: "Ensures mod_cluster configuration is deployed"
-  become: yes
+  become: true
   ansible.builtin.template:
     src: templates/mod_cluster.conf.j2
     dest: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf"
@@ -25,11 +25,11 @@
     - 'Expire mod_cluster cache and restart'
 
 - name: "Start HTTPd Service"
-  become: yes
+  become: true
   ansible.builtin.service:
     name: "{{ jbcs_service_name }}.service"
     state: started
-    enabled: yes
+    enabled: true
 
 - name: "Wait for all used ports to be open"
   ansible.builtin.wait_for:

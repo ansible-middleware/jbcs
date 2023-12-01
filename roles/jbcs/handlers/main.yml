@@ -1,6 +1,6 @@
 ---
 - name: "Restart JBCS"
-  become: yes
+  become: true
   ansible.builtin.service:
     name: "{{ jbcs_service_name }}.service"
     state: restarted
@@ -9,6 +9,6 @@
   ansible.builtin.include_tasks: tasks/mod_cluster_cache_and_restart.yml
 
 - name: "Reload systemd"
-  become: yes
+  become: true
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
