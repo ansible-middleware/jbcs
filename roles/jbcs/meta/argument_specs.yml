@@ -17,13 +17,25 @@ argument_specs:
                 description: "SSL listen port"
                 type: "int"
             jbcs_version:
-                default: "2.4.37-SP11"
+                default: "2.4.57"
                 description: "Version of JBCS install archive"
+                type: "str"
+            jbcs_distro:
+                default: "RHEL8"
+                description: "Install on this version of RHEL"
+                type: "str"
+            jbcs_arch:
+                default: 'x86_64'
+                description: "Install on this architecture"
                 type: "str"
             jbcs_bundle:
                 # line 5 of jbcs/defaults/main.yml
-                default: "jbcs-httpd24-httpd-{{ jbcs_version }}-RHEL8-x86_64.zip"
+                default: "jbcs-httpd24-httpd-{{ jbcs_version }}-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
                 description: "Filename of JBCS install archive"
+                type: "str"
+            jbcs_patch_bundle:
+                default: "jbcs-httpd24-httpd-{{ jbcs_version }}-SP[0-9]*-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
+                description: "Filename of JBCS patch install archive"
                 type: "str"
             jbcs_zip_path:
                 # line 6 of jbcs/defaults/main.yml
@@ -96,11 +108,11 @@ argument_specs:
                 description: "Name for virtualhost ServerName directive"
                 type: "str"
             jbcs_configure_firewalld:
-                default: True
+                default: true
                 description: "Whether to configure firewalld ports for jbcs"
                 type: "bool"
             jbcs_port_check:
-                default: False
+                default: false
                 description: "Whether to check open ports at end of playbook"
                 type: "bool"
             jbcs_proxy_pass:

@@ -85,7 +85,7 @@
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
-        product_type: SECURITY
+        product_type: DISTRIBUTION
         product_version: "{{ jbcs_version.split('-')[0] }}"
         product_category: "core.service.apachehttp"
       register: rhn_products
@@ -94,7 +94,7 @@
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + jbcs_version + '-RHEL8-x86_64.zip') }}"
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + jbcs_version + '-' + jbcs_distro + '-' + jbcs_arch + '.zip') }}"
       delegate_to: localhost
       run_once: yes
 
