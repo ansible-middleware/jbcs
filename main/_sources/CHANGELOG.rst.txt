@@ -15,6 +15,11 @@ Minor Changes
 - Add proxy pass directives to ssl config `#3 <https://github.com/ansible-middleware/jbcs/pull/3>`_
 - Update default jbcs version to 2.4.57 `#7 <https://github.com/ansible-middleware/jbcs/pull/7>`_
 
+Bugfixes
+--------
+
+- Add missing become where needed `#6 <https://github.com/ansible-middleware/jbcs/pull/6>`_
+
 v1.0.3
 ======
 
