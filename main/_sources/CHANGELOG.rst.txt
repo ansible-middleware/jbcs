@@ -9,6 +9,11 @@ This changelog describes changes after version 1.0.0.
 v1.0.4-devel
 ============
 
+Major Changes
+-------------
+
+- Set minimum ansible-core version to 2.14 `#8 <https://github.com/ansible-middleware/jbcs/pull/8>`_
+
 Minor Changes
 -------------
 
