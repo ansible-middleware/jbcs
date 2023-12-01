@@ -26,7 +26,7 @@
         validate_certs: no
       delegate_to: localhost
       loop:
-        - "{{ assets_server }}/coreservices/httpd24-2.4.37-SP11/jbcs-httpd24-httpd-2.4.37-SP11-RHEL8-x86_64.zip"
+        - "{{ assets_server }}/coreservices/httpd24-2.4.57/jbcs-httpd24-httpd-2.4.57-RHEL8-x86_64.zip"
       loop_control:
         loop_var: asset
       when:
