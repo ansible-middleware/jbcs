@@ -5,8 +5,12 @@ jbcs_ssl_port: 443
 jbcs_version: '2.4.57'
 jbcs_distro: RHEL8
 jbcs_arch: x86_64
+jbcs_bundle_prefix:  "jbcs-httpd24-httpd"
 
-jbcs_bundle: "jbcs-httpd24-httpd-{{ jbcs_version }}-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
+jbcs_bundle: "{{ jbcs_patch_bundle }}-{{ jbcs_version }}-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
+jbcs_patch_bundle: "{{ jbcs_patch_bundle }}-{{ jbcs_version }}-SP[1-9][0-9]*-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
+
+jbcs_patch: true
 jbcs_zip_path: /opt/apps/
 
 jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/

@@ -1,83 +1,9 @@
 ---
-- name: "Check preconditions"
-  ansible.builtin.assert:
-    that:
-      - httpd is defined
-      - httpd.user is defined
-      - httpd.user.name is defined
-      - httpd.group is defined
-      - httpd.group.name is defined
-      - httpd.home is defined
-    quiet: true
-
-- name: Create group
-  become: true
-  ansible.builtin.group:
-    name: "{{ httpd.group.name }}"
-    state: present
-    gid: "{{ httpd.group.id | default(omit) }}"
-    system: true
-
-- name: Create user
-  become: true
-  ansible.builtin.user:
-    name: "{{ httpd.user.name }}"
-    group: "{{ httpd.group.name }}"
-    home: /opt/jbcs/
-    state: present
-    uid: "{{ httpd.user.id | default(omit) }}"
-    system: true
-
-- name: Create home directory
-  ansible.builtin.file:
-    path: /opt/jbcs/
-    owner: "{{ httpd.user.name }}"
-    group: "{{ httpd.group.name }}"
-  changed_when: false
-
-- name: Create directory for zipfile
-  become: true
-  ansible.builtin.file:
-    path: "{{ jbcs_zip_path }}"
-    owner: "{{ httpd.user.name }}"
-    group: "{{ httpd.group.name }}"
-    mode: 0750
-    state: directory
-
-## check remote archive
-- name: Set download archive path
-  ansible.builtin.set_fact:
-    archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
-
-- name: Check download archive path
-  become: true
-  ansible.builtin.stat:
-    path: "{{ archive }}"
-  register: archive_path
-
-## download to controller
-- name: Check local download archive path
-  ansible.builtin.stat:
-    path: "{{ lookup('env', 'PWD') }}"
-  register: local_path
-  delegate_to: localhost
-
-- name: Check local download archive
-  ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
-  register: local_archive_path
-  delegate_to: localhost
-
-- name: Download JBCS from RHN using JBoss Network API
+- name: Download JBCS patch from RHN using JBoss Network API
   delegate_to: localhost
   run_once: true
   when:
     - not jbcs_installed is defined
-    - archive_path is defined
-    - archive_path.stat is defined
-    - not archive_path.stat.exists
-    - local_archive_path.stat is defined
-    - not local_archive_path.stat.exists
     - not jbcs_offline_install
     - rhn_username is defined and rhn_password is defined
   block:
@@ -85,40 +11,85 @@
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
-        product_type: DISTRIBUTION
+        product_type: SECURITY
         product_version: "{{ jbcs_version.split('-')[0] }}"
         product_category: "core.service.apachehttp"
       register: rhn_products
       delegate_to: localhost
       run_once: true
 
-    - name: Determine install zipfile from search results
+    - name: Determine patch zipfiles from search results
       ansible.builtin.set_fact:
-        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', \
-                                     '.*/' + [ jbcs_bundle_prefix, jbcs_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip') }}"
+        rhn_filtered_products: "{{ rhn_products.results | map(attribute='file_path') | \
+                                   select('match', '^[^/]*/' + jbcs_patch_bundle + '$') | \
+                                   map('regex_replace', '[^/]*/' + jbcs_bundle_prefix + '-' + jbcs_version + '-SP([1-9][0-9]*)-.*', '\\1' ) | \
+                                   list | unique }}"
       delegate_to: localhost
       run_once: true
 
-    - name: Download JBCS
+    - name: Sort patch versions
+      ansible.builtin.set_fact:
+        latest_patch_version: "{{ 'SP' + (rhn_filtered_products | middleware_automation.common.version_sort | last) }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Determine latest patch version
+      ansible.builtin.set_fact:
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', \
+                                     '[^/]*/' + [ jbcs_bundle_prefix, jbcs_version, latest_patch_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip$') }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Determine patch archive filename
+      ansible.builtin.set_fact:
+        jbcs_patch_bundle: "{{ (rhn_filtered_products | first).file_path | basename }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Download JBCS patch
       middleware_automation.common.product_download:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_id: "{{ (rhn_filtered_products | first).id }}"
-        dest: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+        dest: "{{ local_path.stat.path }}/{{ jbcs_patch_bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: true
 
-- name: Check downloaded archive
+- name: Use provided JBCS patch archive for offline install
+  delegate_to: localhost
+  run_once: true
+  when:
+    - not jbcs_installed is defined
+    - jbcs_offline_install
+  block:
+    - name: TODO
+      ansible.builtin.debug:
+        msg: "Offline install patch not implemented"
+      delegate_to: localhost
+      run_once: true
+
+- name: Check local download archive
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+    path: "{{ local_path.stat.path }}/{{ jbcs_patch_bundle }}"
   register: local_archive_path
   delegate_to: localhost
+
+## check remote archive
+- name: Set download archive path
+  ansible.builtin.set_fact:
+    archive: "{{ jbcs_zip_path }}/{{ jbcs_patch_bundle }}"
+
+- name: Check download archive path
+  become: true
+  ansible.builtin.stat:
+    path: "{{ archive }}"
+  register: archive_path
 
 ## copy and unpack
 - name: Copy archive to target nodes
   ansible.builtin.copy:
-    src: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+    src: "{{ local_path.stat.path }}/{{ jbcs_patch_bundle }}"
     dest: "{{ archive }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
@@ -136,7 +107,7 @@
   register: path_to_workdir
   become: true
 
-- name: Extract JBCS archive on target
+- name: Extract JBCS patch archive on target
   ansible.builtin.unarchive:
     remote_src: true
     src: "{{ archive }}"

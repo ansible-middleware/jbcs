@@ -28,14 +28,22 @@ argument_specs:
                 default: 'x86_64'
                 description: "Install on this architecture"
                 type: "str"
+            jbcs_patch:
+                default: true
+                description: "Enable security patches install"
+                type: "bool"
             jbcs_bundle:
                 # line 5 of jbcs/defaults/main.yml
                 default: "jbcs-httpd24-httpd-{{ jbcs_version }}-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
                 description: "Filename of JBCS install archive"
                 type: "str"
             jbcs_patch_bundle:
-                default: "jbcs-httpd24-httpd-{{ jbcs_version }}-SP[0-9]*-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
+                default: "jbcs-httpd24-httpd-{{ jbcs_version }}-SP[1-9][0-9]*-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
                 description: "Filename of JBCS patch install archive"
+                type: "str"
+            jbcs_bundle_prefix:
+                default: "jbcs-httpd24-httpd"
+                description: "Filename prefix for JBCS install archives"
                 type: "str"
             jbcs_zip_path:
                 # line 6 of jbcs/defaults/main.yml
