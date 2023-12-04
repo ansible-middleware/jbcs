@@ -3,7 +3,7 @@
 
 - All YAML files named with `.yml` extension
 - Use spaces around jinja variables. `{{ var }}` over `{{var}}`
-- Variables that are internal to the role should be lowercase and start with the role name
+- Exposed role variables should be lowercase and start with the role name
 - Keep roles self contained - Roles should avoid including tasks from other roles when possible
 - Plays should do nothing more than include a list of roles, except where `pre_tasks` and `post_tasks` are required, when possible
 - Separators - Use valid names, ie. underscores (e.g. `my_role` `my_playbook`) not dashes (`my-role`)
