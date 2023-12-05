@@ -9,6 +9,13 @@
 - name: Import install tasks
   ansible.builtin.include_tasks: install.yml
 
+- name: Import patch tasks
+  ansible.builtin.include_tasks: patch.yml
+  when: jbcs_patch
+
+- name: Import post install tasks
+  ansible.builtin.include_tasks: post_install.yml
+
 - name: Import SSL configuration tasks
   ansible.builtin.include_tasks: ssl.yml
 

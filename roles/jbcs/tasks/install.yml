@@ -62,7 +62,7 @@
   register: local_path
   delegate_to: localhost
 
-- name: Check downloaded archive
+- name: Check local download archive
   ansible.builtin.stat:
     path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
   register: local_archive_path
@@ -94,7 +94,8 @@
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '.*/jbcs-httpd24-httpd-' + jbcs_version + '-' + jbcs_distro + '-' + jbcs_arch + '.zip') }}"
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', \
+                                     '.*/' + [ jbcs_bundle_prefix, jbcs_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip') }}"
       delegate_to: localhost
       run_once: true
 
@@ -154,43 +155,3 @@
     msg: "{{ httpd.home }} already exists and version unchanged, skipping decompression"
   when:
     - not new_version_downloaded.changed and path_to_workdir.stat.exists
-
-- name: Post install HTTPD
-  become: true
-  ansible.builtin.template:
-    src: templates/jbcs-httpd24-httpd.service.j2
-    dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
-    owner: "{{ httpd.user.name }}"
-    group: "{{ httpd.group.name }}"
-    mode: 0640
-  notify:
-    - "Reload systemd"
-
-- name: Ensure JBCS configuration is correct
-  become: true
-  notify:
-    - "Restart JBCS"
-  loop:
-    - name: 00-base.conf
-      dest: "{{ httpd.home }}/httpd/conf.modules.d"
-    - name: httpd.conf
-      dest:  "{{ httpd.home }}/httpd/conf"
-  ansible.builtin.template:
-    src: "templates/{{ item.name }}.j2"
-    dest: "{{ item.dest }}/{{ item.name }}"
-    owner: "{{ httpd.user.name }}"
-    group: "{{ httpd.group.name }}"
-    mode: 0640
-
-- name: Ensure JBCS module configuration is correct
-  become: true
-  ansible.builtin.command: "mv {{ item }} {{ item }}.bak"
-  args:
-    removes: "{{ item }}"
-    creates: "{{ item }}.bak"
-    chdir: "{{ httpd.home }}/httpd/conf.d/"
-  failed_when: false
-  changed_when: false
-  loop:
-    - manual.conf
-    - welcome.conf
