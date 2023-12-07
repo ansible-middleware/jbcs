@@ -72,7 +72,6 @@
   delegate_to: localhost
   run_once: true
   when:
-    - not jbcs_installed is defined
     - archive_path is defined
     - archive_path.stat is defined
     - not archive_path.stat.exists
