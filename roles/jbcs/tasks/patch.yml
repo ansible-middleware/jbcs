@@ -3,7 +3,6 @@
   delegate_to: localhost
   run_once: true
   when:
-    - not jbcs_installed is defined
     - not jbcs_offline_install
     - rhn_username is defined and rhn_password is defined
   block:
@@ -58,16 +57,40 @@
 
 - name: Use provided JBCS patch archive for offline install
   delegate_to: localhost
-  run_once: true
   when:
-    - not jbcs_installed is defined
     - jbcs_offline_install
+    - '"[1-9][0-9]" in jbcs_patch_bundle'
   block:
-    - name: TODO
-      ansible.builtin.debug:
-        msg: "Offline install patch not implemented"
+
+    - name: Initialize candidates list
       delegate_to: localhost
+      ansible.builtin.set_fact:
+        sp_archive_candidates: []
+
+    - name: Find local SP archive(s)
       run_once: true
+      with_fileglob:
+        - "{{ local_path.stat.path }}/{{ jbcs_patch_bundle.replace('[1-9][0-9]', '') }}"
+      ansible.builtin.set_fact:
+        sp_archive_candidates: "{{ sp_archive_candidates + [item | basename] }}"
+      delegate_to: localhost
+
+    - name: Process candidates and pick the newest Service Pack
+      delegate_to: localhost
+      when: sp_archive_candidates | length > 0
+      vars:
+        jbcs_prefix: "{{ jbcs_bundle_prefix }}-{{ jbcs_version }}-SP"
+        jbcs_sufix: "-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
+      ansible.builtin.set_fact:
+        newest_sp: "{{ sp_archive_candidates | \
+                       map('replace', jbcs_prefix, '') | \
+                       map('replace', jbcs_sufix, '')  | \
+                       map('int') | sort | last }}"
+
+    - name: "Use SP {{ newest_sp }}"
+      when: newest_sp is defined
+      ansible.builtin.set_fact:
+        jbcs_patch_bundle: "{{ jbcs_bundle_prefix }}-{{ jbcs_version }}-SP{{ newest_sp }}-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
 
 - name: Check local download archive
   ansible.builtin.stat:
@@ -112,12 +135,11 @@
     remote_src: true
     src: "{{ archive }}"
     dest: /opt/jbcs/
-    creates: "{{ httpd.home }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
   become: true
   when:
-    - new_version_downloaded.changed or not path_to_workdir.stat.exists
+    - new_version_downloaded.changed
   notify:
     - Restart JBCS
 
@@ -125,4 +147,6 @@
   ansible.builtin.debug:
     msg: "{{ httpd.home }} already exists and version unchanged, skipping decompression"
   when:
-    - not new_version_downloaded.changed and path_to_workdir.stat.exists
+    - not new_version_downloaded.changed
+    - workdir is defined
+    - workdir.stat.exists
