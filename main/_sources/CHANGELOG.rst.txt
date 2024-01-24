@@ -6,7 +6,7 @@ middleware_automation.jbcs Release Notes
 
 This changelog describes changes after version 1.0.0.
 
-v1.0.4-devel
+v1.1.0-devel
 ============
 
 Major Changes
