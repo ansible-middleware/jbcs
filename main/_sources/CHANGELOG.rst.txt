@@ -1,13 +1,21 @@
-========================================
-middleware_automation.jbcs Release Notes
-========================================
+=========================================
+middleware\_automation.jbcs Release Notes
+=========================================
 
 .. contents:: Topics
 
 This changelog describes changes after version 1.0.0.
 
-v1.1.0-devel
+v1.1.1-devel
 ============
+
+Release Summary
+---------------
+
+Internal release, documentation or test changes only.
+
+v1.1.0
+======
 
 Major Changes
 -------------
@@ -44,3 +52,4 @@ v1.0.1
 
 v1.0.0
 ======
+
