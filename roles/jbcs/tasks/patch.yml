@@ -139,7 +139,7 @@
     group: "{{ httpd.group.name }}"
   become: true
   when:
-    - new_version_downloaded.changed
+    - new_version_downloaded.changed or path_to_workdir is not defined or not path_to_workdir.stat.exists
   notify:
     - Restart JBCS
 
@@ -148,5 +148,5 @@
     msg: "{{ httpd.home }} already exists and version unchanged, skipping decompression"
   when:
     - not new_version_downloaded.changed
-    - workdir is defined
-    - workdir.stat.exists
+    - path_to_workdir is defined
+    - path_to_workdir.stat.exists

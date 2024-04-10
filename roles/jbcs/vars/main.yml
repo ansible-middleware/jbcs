@@ -1,5 +1,5 @@
 ---
-httpd:
+httpd: # noqa var-naming this is an internal dict
   bind_address: "{{ jbcs_bind_address }}"
   listen_port: "{{ jbcs_listen_port }}"
   mod_cluster:
