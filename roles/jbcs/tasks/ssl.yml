@@ -35,7 +35,7 @@
         state: hard
         owner: "{{ httpd.user.name }}"
         group: "{{ httpd.group.name }}"
-        mode: 0640
+        mode: '0640'
       when:
         - ssl_conf_file.stat.exists
         - not ssl_conf_disabled_file.stat.exists
@@ -55,7 +55,7 @@
         dest: "{{ ssl_conf }}"
         owner: "{{ httpd.user.name }}"
         group: "{{ httpd.group.name }}"
-        mode: 0640
+        mode: '0640'
       notify:
         - Restart JBCS
 

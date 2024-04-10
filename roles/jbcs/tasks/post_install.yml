@@ -6,7 +6,7 @@
     dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-    mode: 0640
+    mode: '0640'
   notify:
     - "Reload systemd"
 
@@ -18,13 +18,13 @@
     - name: 00-base.conf
       dest: "{{ httpd.home }}/httpd/conf.modules.d"
     - name: httpd.conf
-      dest:  "{{ httpd.home }}/httpd/conf"
+      dest: "{{ httpd.home }}/httpd/conf"
   ansible.builtin.template:
     src: "templates/{{ item.name }}.j2"
     dest: "{{ item.dest }}/{{ item.name }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-    mode: 0640
+    mode: '0640'
 
 - name: Ensure JBCS module configuration is correct
   become: true

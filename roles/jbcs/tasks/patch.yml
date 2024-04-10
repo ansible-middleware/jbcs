@@ -21,7 +21,7 @@
       ansible.builtin.set_fact:
         rhn_filtered_products: "{{ rhn_products.results | map(attribute='file_path') | \
                                    select('match', '^[^/]*/' + jbcs_patch_bundle + '$') | \
-                                   map('regex_replace', '[^/]*/' + jbcs_bundle_prefix + '-' + jbcs_version + '-SP([1-9][0-9]*)-.*', '\\1' ) | \
+                                   map('regex_replace', '[^/]*/' + jbcs_bundle_prefix + '-' + jbcs_version + '-SP([1-9][0-9]*)-.*', '\\1') | \
                                    list | unique }}"
       delegate_to: localhost
       run_once: true
@@ -35,7 +35,7 @@
     - name: Determine latest patch version
       ansible.builtin.set_fact:
         rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', \
-                                     '[^/]*/' + [ jbcs_bundle_prefix, jbcs_version, latest_patch_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip$') }}"
+                                   '[^/]*/' + [ jbcs_bundle_prefix, jbcs_version, latest_patch_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip$') }}"
       delegate_to: localhost
       run_once: true
 
@@ -116,7 +116,7 @@
     dest: "{{ archive }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-    mode: 0640
+    mode: '0640'
   register: new_version_downloaded
   when:
     - not archive_path.stat.exists

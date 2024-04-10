@@ -26,7 +26,7 @@
     dest: "{{ httpd.home }}/httpd/conf.d/mod_cluster.conf"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-    mode: 0640
+    mode: '0640'
   when: jbcs_mod_cluster_enable
   notify:
     - 'Expire mod_cluster cache and restart'
