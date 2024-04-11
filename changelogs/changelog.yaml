@@ -56,3 +56,5 @@ releases:
     fragments:
     - v1.1.1-devel_summary.yaml
     release_date: '2024-04-10'
+  1.1.2:
+    release_date: '2024-04-11'
