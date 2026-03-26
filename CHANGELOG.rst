@@ -6,6 +6,14 @@ middleware\_automation.jbcs Release Notes
 
 This changelog describes changes after version 1.0.0.
 
+v1.1.3
+======
+
+Release Summary
+---------------
+
+Internal release, documentation or test changes only.
+
 v1.1.2
 ======
 
