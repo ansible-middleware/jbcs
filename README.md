@@ -10,6 +10,10 @@ Collection to install and configure JBoss Core Services as a reverse proxy / mod
 
 This collection has been tested against following Ansible versions: **>=2.16.0**.
 
+## Python version compatibility
+
+This collection has been tested against following Python versions: **>=3.12**.
+
 Plugins and modules within a collection may be tested with only specific Ansible versions. A collection may contain metadata that identifies these versions.
 <!--end requires_ansible-->
 
@@ -52,12 +56,19 @@ Using all default values, the collection is invoked from a playbook as follows:
     - jbcs
 ```
 
+
+## Support
+
 <!--start support -->
+
+For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/jbcs/issues).
+
 <!--end support -->
+
 
 ## Release and Upgrade Notes
 
-For details on changes between versions, please see [the changelog for this collection](https://github.com/ansible-middleware/jbcs/blob/main/CHANGELOG.rst).
+For details on changes between versions, please see the [CHANGELOG](https://github.com/ansible-middleware/jbcs/blob/main/CHANGELOG.rst) for this collection.
 
 ## License
 
