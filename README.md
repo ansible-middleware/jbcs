@@ -52,8 +52,15 @@ Using all default values, the collection is invoked from a playbook as follows:
     - jbcs
 ```
 
+
+## Support
+
 <!--start support -->
+
+For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/jbcs/issues).
+
 <!--end support -->
+
 
 ## Release and Upgrade Notes
 
