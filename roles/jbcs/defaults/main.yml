@@ -11,7 +11,7 @@ jbcs_bundle: "{{ jbcs_bundle_prefix }}-{{ jbcs_version }}-{{ jbcs_distro }}-{{ j
 jbcs_patch_bundle: "{{ jbcs_bundle_prefix }}-{{ jbcs_version }}-SP[1-9][0-9]*-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
 
 jbcs_patch: true
-jbcs_zip_path: /opt/apps/
+jbcs_zip_path: /opt/apps
 
 jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/
 
