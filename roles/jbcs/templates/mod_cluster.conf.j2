@@ -29,20 +29,21 @@ SSLProxyCheckPeerName off
   Listen 6666
   <VirtualHost {{ ansible_nodename }}:{{ httpd.mod_cluster.port }}>
     DirectoryIndex disabled
-    <Directory />
-      Require {{ httpd.mod_cluster.require }}
-    </Directory>
     KeepAliveTimeout 60
     MaxKeepAliveRequests 0
 
     ServerAdvertise on {{ ansible_nodename }}:{{ httpd.mod_cluster.port }}
     AdvertiseFrequency 5
-    EnableMCPMReceive
 
     ManagerBalancerName "{{ jbcs_mod_cluster_balancer }}"
     CreateBalancers 0
     LogLevel info
     ErrorLog logs/modcluster.log
+
+    <Location />
+      EnableMCPMReceive
+      Require {{ httpd.mod_cluster.require }}
+    </Location>
 
     <Location /mod_cluster_manager>
       SetHandler mod_cluster-manager

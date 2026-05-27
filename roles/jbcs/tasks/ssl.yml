@@ -49,6 +49,21 @@
   become: true
   when: jbcs_ssl_enable
   block:
+    - name: Check if SSL certificate exists
+      ansible.builtin.stat:
+        path: "/etc/pki/tls/certs/{{ jbcs_external_domain_name }}.crt"
+      register: ssl_cert_file
+
+    - name: Create self-signed SSL certificate if missing
+      ansible.builtin.command: >
+        openssl req -x509 -newkey rsa:2048 -sha256 -days 365 -nodes
+        -keyout /etc/pki/tls/private/{{ jbcs_external_domain_name }}.key
+        -out /etc/pki/tls/certs/{{ jbcs_external_domain_name }}.crt
+        -subj "/CN={{ jbcs_external_domain_name }}"
+        -addext "subjectAltName=DNS:{{ jbcs_external_domain_name }},IP:127.0.0.1"
+      when: not ssl_cert_file.stat.exists
+      changed_when: true
+
     - name: "Ensures HTTPd SSL configuration is deployed"
       ansible.builtin.template:
         src: templates/ssl.conf.j2

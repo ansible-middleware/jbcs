@@ -6,3 +6,6 @@
       - unzip
       - procps-ng
       - mailcap
+
+- name: Ensure mime.types file exists
+  ansible.builtin.include_tasks: mime_types.yml
