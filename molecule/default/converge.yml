@@ -6,7 +6,7 @@
     jbcs_offline_install: False
     jbcs_bind_address: '*'
     omit_rhn_output: False
-    rhn_username: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_CLIENTID') }}"
-    rhn_password: "{{ lookup('env', 'PROD_JBOSSNETWORK_API_SECRET') }}"
+    rhn_username: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID') }}"
+    rhn_password: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_SECRET') }}"
   roles:
     - middleware_automation.jbcs.jbcs

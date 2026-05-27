@@ -40,4 +40,3 @@ skip_list:
   - schema[meta]
 
 use_default_rules: true
-parseable: true
