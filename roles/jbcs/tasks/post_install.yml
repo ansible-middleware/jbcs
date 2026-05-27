@@ -6,7 +6,7 @@
     chdir: "{{ httpd.home }}/httpd/"
   changed_when: true
 
-- name: Post install HTTPD
+- name: Post install HTTPD Service Unit
   become: true
   ansible.builtin.template:
     src: templates/jbcs-httpd24-httpd.service.j2
@@ -14,11 +14,11 @@
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: '0640'
-  notify:
-    - "Reload systemd"
 
-- name: Force systemd daemon-reload immediately before service start
-  ansible.builtin.meta: flush_handlers
+- name: Reload systemd daemon natively
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
 
 - name: Ensure JBCS configuration is correct
   become: true
