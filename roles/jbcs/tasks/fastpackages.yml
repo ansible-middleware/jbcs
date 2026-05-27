@@ -15,4 +15,4 @@
     name: "{{ packages_to_install }}"
     state: present
   when: packages_to_install | default([]) | length > 0
-  ignore_errors: true
+  failed_when: false
