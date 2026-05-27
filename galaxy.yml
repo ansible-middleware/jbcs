@@ -4,6 +4,7 @@ name: jbcs
 version: "1.1.5"
 readme: README.md
 authors:
+  - Ranabir Chakraborty <ranabir@ibm.com>
   - Romain Pelisse <rpelisse@redhat.com>
   - Guido Grazioli <ggraziol@redhat.com>
 description: Install and configure a JBoss Core Services server.

@@ -19,17 +19,10 @@
       ansible.builtin.set_fact:
         assets_server: "{{ lookup('env','MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL') }}"
 
-    - name: "Ensure /opt/apps directory exists"
-      ansible.builtin.file:
-        path: "/opt/apps/"
-        state: directory
-        mode: '0755'
-      delegate_to: localhost
-
     - name: "Download and deploy jbcs zips from {{ assets_server }}"
       ansible.builtin.get_url:
         url: "{{ asset }}"
-        dest: "/opt/apps/"
+        dest: "{{ lookup('env', 'PWD') }}/"
         validate_certs: no
       delegate_to: localhost
       loop:

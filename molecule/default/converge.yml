@@ -9,5 +9,14 @@
     omit_rhn_output: False
     rhn_username: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID') | default(omit) }}"
     rhn_password: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_SECRET') | default(omit) }}"
+  pre_tasks:
+    - name: Debug - Check environment variables
+      ansible.builtin.debug:
+        msg:
+          - "UNIFIED_DOWNLOADS_API_CLIENTID length: {{ lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID') | length }}"
+          - "UNIFIED_DOWNLOADS_API_SECRET length: {{ lookup('env', 'UNIFIED_DOWNLOADS_API_SECRET') | length }}"
+          - "jbcs_offline_install: {{ jbcs_offline_install }}"
+          - "rhn_username defined: {{ rhn_username is defined }}"
+          - "rhn_password defined: {{ rhn_password is defined }}"
   roles:
     - middleware_automation.jbcs.jbcs
