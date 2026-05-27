@@ -13,7 +13,7 @@ jbcs_patch_bundle: "{{ jbcs_bundle_prefix }}-{{ jbcs_version }}-SP[1-9][0-9]*-{{
 jbcs_patch: true
 jbcs_zip_path: /opt/apps
 
-jbcs_home: /opt/jbcs/jbcs-httpd24-2.4/
+jbcs_home: /opt/jbcs/jbcs-httpd24-2.4
 
 jbcs_bind_address: "localhost"
 jbcs_listen_port: 80
