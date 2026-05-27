@@ -68,7 +68,7 @@
   register: local_archive_path
   delegate_to: localhost
 
-- name: Download JBCS from RHN using JBoss Network API
+- name: Download JBCS from RHN using Unified Downloads
   delegate_to: localhost
   run_once: true
   when:
@@ -80,7 +80,7 @@
     - not jbcs_offline_install
     - rhn_username is defined and rhn_password is defined
   block:
-    - name: Retrieve product download using JBoss Network API
+    - name: Retrieve product download using Unified Downloads
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
@@ -91,9 +91,15 @@
       delegate_to: localhost
       run_once: true
 
+    - name: Convert results to list if dict
+      ansible.builtin.set_fact:
+        rhn_products_list: "{{ (rhn_products.results | dict2items | map(attribute='value') | list) if rhn_products.results is mapping else rhn_products.results }}"
+      delegate_to: localhost
+      run_once: true
+
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', \
+        rhn_filtered_products: "{{ rhn_products_list | selectattr('file_path', 'match', \
                                    '.*/' + [ jbcs_bundle_prefix, jbcs_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip') }}"
       delegate_to: localhost
       run_once: true

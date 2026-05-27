@@ -2,8 +2,8 @@
 jbcs_ssl_enable: true
 jbcs_ssl_port: 443
 
-jbcs_version: '2.4.57'
-jbcs_distro: RHEL8
+jbcs_version: '2.4.62'
+jbcs_distro: RHEL9
 jbcs_arch: x86_64
 jbcs_bundle_prefix: "jbcs-httpd24-httpd"
 

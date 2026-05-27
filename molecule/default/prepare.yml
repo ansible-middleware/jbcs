@@ -19,14 +19,21 @@
       ansible.builtin.set_fact:
         assets_server: "{{ lookup('env','MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL') }}"
 
+    - name: "Ensure /opt/apps directory exists"
+      ansible.builtin.file:
+        path: "/opt/apps/"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+
     - name: "Download and deploy jbcs zips from {{ assets_server }}"
       ansible.builtin.get_url:
         url: "{{ asset }}"
-        dest: "{{ lookup('env', 'PWD') | default('/opt') }}"
+        dest: "/opt/apps/"
         validate_certs: no
       delegate_to: localhost
       loop:
-        - "{{ assets_server }}/coreservices/httpd24-2.4.57/jbcs-httpd24-httpd-2.4.57-RHEL8-x86_64.zip"
+        - "{{ assets_server }}/coreservices/httpd24-2.4.62/jbcs-httpd24-httpd-2.4.62-RHEL9-x86_64.zip"
       loop_control:
         loop_var: asset
       when:
