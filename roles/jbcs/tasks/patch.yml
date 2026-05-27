@@ -1,12 +1,12 @@
 ---
-- name: Download JBCS patch from RHN using JBoss Network API
+- name: Download JBCS patch from RHN using Unified Downloads
   delegate_to: localhost
   run_once: true
   when:
     - not jbcs_offline_install
     - rhn_username is defined and rhn_password is defined
   block:
-    - name: Retrieve product download using JBoss Network API
+    - name: Retrieve product download using Unified Downloads
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
