@@ -1,6 +1,6 @@
 # Ansible Collection - middleware_automation.jbcs
 <!--start build_status -->
-[![Build Status](https://github.com/ansible-middleware/jbcs/actions/workflows/ci.yml/badge.svg)](https://github.com/ansible-middleware/jbcs/actions/workflows/ci.yml)
+[![Build Status](https://github.com/ansible-middleware/jbcs/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ansible-middleware/jbcs/actions/workflows/ci.yml)
 
 <!--end build_status -->
 Collection to install and configure JBoss Core Services as a reverse proxy / modcluster instance.
