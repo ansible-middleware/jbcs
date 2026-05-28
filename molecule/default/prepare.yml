@@ -9,6 +9,7 @@
           - sudo
           - procps-ng
           - openssl
+          - unzip
         state: present
 
     - name: Display Ansible version

@@ -6,6 +6,10 @@
       - unzip
       - procps-ng
       - mailcap
+      - jansson
+      - libxcrypt-compat
+      - brotli
+      - yajl
 
 - name: Ensure mime.types file exists
   ansible.builtin.include_tasks: mime_types.yml
