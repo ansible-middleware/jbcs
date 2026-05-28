@@ -70,3 +70,41 @@ releases:
     fragments:
     - v1.1.4-devel_summary.yaml
     release_date: '2026-03-26'
+  1.1.5:
+    changes:
+      bugfixes:
+      - 'AMW-541 collection need to use Unified Downloads format `#19 <https://github.com/ansible-middleware/jbcs/pull/19>`_
+
+        '
+      - 'AMW-541 jbcs collection GH action fix and Docs CI fix `#18 <https://github.com/ansible-middleware/jbcs/pull/18>`_
+
+        '
+      - 'AMW-541 jbcs collection GH action need to use Unified Downloads secret `#17
+        <https://github.com/ansible-middleware/jbcs/pull/17>`_
+
+        '
+      - 'AMW-543 HTTPd Service start failure in jbcs collection `#24 <https://github.com/ansible-middleware/jbcs/pull/24>`_
+
+        '
+      major_changes:
+      - 'AMW-540 Fix the upstream collection requirements with common v1.2.4 `#16
+        <https://github.com/ansible-middleware/jbcs/pull/16>`_
+
+        '
+      minor_changes:
+      - 'AMW-545 Fixing jbcs colleciton molecule test online install GLIBC requirements
+        issue `#25 <https://github.com/ansible-middleware/jbcs/pull/25>`_
+
+        '
+      - 'Fix certification requirements for JBCS `#15 <https://github.com/ansible-middleware/jbcs/pull/15>`_
+
+        '
+    fragments:
+    - 15.yaml
+    - 16.yaml
+    - 17.yaml
+    - 18.yaml
+    - 19.yaml
+    - 24.yaml
+    - 25.yaml
+    release_date: '2026-05-28'

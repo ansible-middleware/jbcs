@@ -6,6 +6,28 @@ middleware\_automation.jbcs Release Notes
 
 This changelog describes changes after version 1.0.0.
 
+v1.1.5
+======
+
+Major Changes
+-------------
+
+- AMW-540 Fix the upstream collection requirements with common v1.2.4 `#16 <https://github.com/ansible-middleware/jbcs/pull/16>`_
+
+Minor Changes
+-------------
+
+- AMW-545 Fixing jbcs colleciton molecule test online install GLIBC requirements issue `#25 <https://github.com/ansible-middleware/jbcs/pull/25>`_
+- Fix certification requirements for JBCS `#15 <https://github.com/ansible-middleware/jbcs/pull/15>`_
+
+Bugfixes
+--------
+
+- AMW-541 collection need to use Unified Downloads format `#19 <https://github.com/ansible-middleware/jbcs/pull/19>`_
+- AMW-541 jbcs collection GH action fix and Docs CI fix `#18 <https://github.com/ansible-middleware/jbcs/pull/18>`_
+- AMW-541 jbcs collection GH action need to use Unified Downloads secret `#17 <https://github.com/ansible-middleware/jbcs/pull/17>`_
+- AMW-543 HTTPd Service start failure in jbcs collection `#24 <https://github.com/ansible-middleware/jbcs/pull/24>`_
+
 v1.1.4
 ======
 
