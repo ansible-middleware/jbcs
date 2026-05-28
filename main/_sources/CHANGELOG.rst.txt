@@ -18,6 +18,7 @@ Minor Changes
 -------------
 
 - AMW-545 Fixing jbcs colleciton molecule test online install GLIBC requirements issue `#25 <https://github.com/ansible-middleware/jbcs/pull/25>`_
+- Fix certification requirements for JBCS `#15 <https://github.com/ansible-middleware/jbcs/pull/15>`_
 
 Bugfixes
 --------
