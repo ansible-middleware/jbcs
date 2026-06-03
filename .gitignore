@@ -11,3 +11,4 @@ docs/_build/
 changelogs/.plugin-cache.yaml
 *.pem
 .vscode/
+.ansible
