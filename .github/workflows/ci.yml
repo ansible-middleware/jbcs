@@ -5,14 +5,23 @@ on:
     branches:
       - main
   pull_request:
+  pull_request_target:
+    types: [labeled]
   schedule:
     - cron: '21 6 * * *'
 
 jobs:
   ci:
+    # Run on: push, pull_request, schedule, OR pull_request_target with 'safe-to-test' label
+    if: |
+      github.event_name != 'pull_request_target' ||
+      github.event.label.name == 'safe-to-test'
     uses: ansible-middleware/github-actions/.github/workflows/ci.yml@main
     secrets: inherit
     with:
       fqcn: 'middleware_automation/jbcs'
       molecule_tests: >-
         [ "default" ]
+      # For forked PRs with 'safe-to-test' label, checkout the fork's code
+      checkout_ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
+      checkout_repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || '' }}
