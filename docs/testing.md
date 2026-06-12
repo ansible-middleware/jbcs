@@ -36,8 +36,6 @@ git clone https://github.com/ansible-middleware/jbcs
 cd jbcs
 # install collection dependencies
 ansible-galaxy collection install -r requirements.yml
-# install collection python deps
-pip install -r requirements.txt
 # create inventory for localhost
 cat << EOF > inventory
 [jbcs]
