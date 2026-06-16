@@ -108,3 +108,12 @@ releases:
     - 24.yaml
     - 25.yaml
     release_date: '2026-05-28'
+  1.1.6:
+    changes:
+      minor_changes:
+      - 'AMW-549 Securely Run GH Action tests for Forked Pull Requests `#30 <https://github.com/ansible-middleware/jbcs/pull/30>`_
+
+        '
+    fragments:
+    - 30.yaml
+    release_date: '2026-06-16'

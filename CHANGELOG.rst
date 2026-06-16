@@ -6,6 +6,14 @@ middleware\_automation.jbcs Release Notes
 
 This changelog describes changes after version 1.0.0.
 
+v1.1.6
+======
+
+Minor Changes
+-------------
+
+- AMW-549 Securely Run GH Action tests for Forked Pull Requests `#30 <https://github.com/ansible-middleware/jbcs/pull/30>`_
+
 v1.1.5
 ======
 
