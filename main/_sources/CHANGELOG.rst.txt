@@ -6,8 +6,16 @@ middleware\_automation.jbcs Release Notes
 
 This changelog describes changes after version 1.0.0.
 
-v1.1.6-devel
+v1.1.7-devel
 ============
+
+Minor Changes
+-------------
+
+- AMW-570 Fixing downstream jbcs download `#31 <https://github.com/ansible-middleware/jbcs/pull/31>`_
+
+v1.1.6
+======
 
 Minor Changes
 -------------
