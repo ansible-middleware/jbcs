@@ -4,7 +4,7 @@
   vars:
     jbcs_version: "2.4.62"
     jbcs_configure_firewalld: False
-    jbcs_offline_install: "{{ (lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID') | length == 0) or (lookup('env', 'UNIFIED_DOWNLOADS_API_SECRET') | length == 0) }}"
+    jbcs_offline_install: "{{ (rhn_username | default(lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID')) | length == 0) or (rhn_password | default(lookup('env', 'UNIFIED_DOWNLOADS_API_SECRET')) | length == 0) }}"
     jbcs_bind_address: '*'
     omit_rhn_output: False
     rhn_username: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID') | default(omit) }}"
