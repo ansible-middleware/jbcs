@@ -13,6 +13,8 @@ Minor Changes
 -------------
 
 - AMW-549 Securely Run GH Action tests for Forked Pull Requests `#30 <https://github.com/ansible-middleware/jbcs/pull/30>`_
+- AMW-549 Securely Run GH Action tests for Forked Pull Requests `#30 <https://github.com/ansible-middleware/jbcs/pull/30>`_
+- AMW-570 Fixing downstream jbcs download `#31 <https://github.com/ansible-middleware/jbcs/pull/31>`_
 
 v1.1.5
 ======

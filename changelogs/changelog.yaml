@@ -114,6 +114,14 @@ releases:
       - 'AMW-549 Securely Run GH Action tests for Forked Pull Requests `#30 <https://github.com/ansible-middleware/jbcs/pull/30>`_
 
         '
+      - 'AMW-549 Securely Run GH Action tests for Forked Pull Requests `#30 <https://github.com/ansible-middleware/jbcs/pull/30>`_
+
+        '
+      - 'AMW-570 Fixing downstream jbcs download `#31 <https://github.com/ansible-middleware/jbcs/pull/31>`_
+
+        '
     fragments:
     - 30.yaml
+    - 30.yaml
+    - 31.yaml
     release_date: '2026-06-16'
