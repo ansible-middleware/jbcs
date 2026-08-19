@@ -9,6 +9,8 @@ docs/_build/
 .mypy_cache/
 *.retry
 changelogs/.plugin-cache.yaml
+changelogs/fragments/*.yml
+changelogs/fragments/*.yaml
 *.pem
 .vscode/
 .ansible
