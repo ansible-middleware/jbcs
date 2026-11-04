@@ -1,0 +1,46 @@
+# Ansible / JBCS domain-specific words
+
+# Product names and projects
+JBCS
+jbcs
+httpd
+apachehttp
+
+# Red Hat / JBoss
+EAP
+eap
+firewalld
+selevel
+serole
+setype
+seuser
+
+# Ansible terms
+FQCN
+fqcn
+blockinfile
+lineinfile
+
+# Collection-specific identifiers
+sangonzal
+ggraziol
+rpelisse
+ranabir
+
+# Molecule testing
+testinfra
+
+# RST / Sphinx directives
+toctree
+
+# System / Linux terms
+procps
+gpgcheck
+gpgkey
+
+# JBCS-specific terms
+modcluster
+zipfile
+
+# Miscellaneous
+rootperm

@@ -38,3 +38,5 @@ jbcs_configure_firewalld: true
 jbcs_port_check: false
 
 jbcs_proxy_pass: []
+
+jbcs_requires_become: true

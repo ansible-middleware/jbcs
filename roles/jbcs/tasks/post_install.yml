@@ -1,6 +1,6 @@
 ---
 - name: Post install HTTPD Service Unit
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.template:
     src: templates/jbcs-httpd24-httpd.service.j2
     dest: "/usr/lib/systemd/system/{{ jbcs_service_name }}.service"
@@ -9,12 +9,12 @@
     mode: '0640'
 
 - name: Reload systemd daemon natively
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.systemd:
     daemon_reload: true
 
 - name: Ensure JBCS configuration is correct
-  become: true
+  become: "{{ jbcs_requires_become }}"
   notify:
     - "Restart JBCS"
   loop:
@@ -30,7 +30,7 @@
     mode: '0640'
 
 - name: Ensure JBCS module configuration is correct
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.command: "mv {{ item }} {{ item }}.bak"
   args:
     removes: "{{ item }}"

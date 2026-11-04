@@ -1,6 +1,6 @@
 ---
 - name: Expire modcluster cache and restart
-  become: true
+  become: "{{ jbcs_requires_become }}"
   block:
     - name: Check prereqs
       ansible.builtin.assert:

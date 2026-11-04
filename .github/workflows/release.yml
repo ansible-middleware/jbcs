@@ -9,21 +9,7 @@ jobs:
     secrets:
       galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
       jira_webhook: ${{ secrets.JIRA_WEBHOOK_CREATE_VERSION }}
+      push_token: ${{ secrets.TRIGGERING_PAT }}
     with:
       collection_fqcn: 'middleware_automation.jbcs'
       downstream_name: 'jbcs'
-
-  dispatch:
-    needs: release
-    strategy:
-      matrix:
-        repo: ['ansible-middleware/ansible-middleware-ee']
-    runs-on: ubuntu-latest
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.TRIGGERING_PAT }}
-          repository: ${{ matrix.repo }}
-          event-type: "Dependency released - jbcs v${{ needs.release.outputs.tag_version }}"
-          client-payload: '{ "github": ${{toJson(github)}} }'

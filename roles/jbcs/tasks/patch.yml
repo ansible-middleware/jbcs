@@ -110,7 +110,7 @@
     archive: "{{ jbcs_zip_path }}/{{ jbcs_patch_bundle }}"
 
 - name: Check download archive path
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.stat:
     path: "{{ archive }}"
   register: archive_path
@@ -128,13 +128,13 @@
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: true
+  become: "{{ jbcs_requires_become }}"
 
 - name: "Check target directory: {{ httpd.home }}"
   ansible.builtin.stat:
     path: "{{ httpd.home }}"
   register: path_to_workdir
-  become: true
+  become: "{{ jbcs_requires_become }}"
 
 - name: Extract JBCS patch archive on target
   ansible.builtin.unarchive:
@@ -143,7 +143,7 @@
     dest: /opt/jbcs/
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-  become: true
+  become: "{{ jbcs_requires_become }}"
   when:
     - new_version_downloaded.changed or path_to_workdir is not defined or not path_to_workdir.stat.exists
   notify:

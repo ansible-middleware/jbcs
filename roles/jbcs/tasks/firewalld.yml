@@ -6,14 +6,14 @@
       - firewalld
 
 - name: Ensure that firewalld service is running
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.systemd:
     name: firewalld
     enabled: true
     state: started
 
 - name: Configure firewall for JBCS ports
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.posix.firewalld:
     port: "{{ port }}"
     permanent: true
