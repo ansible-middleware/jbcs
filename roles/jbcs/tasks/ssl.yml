@@ -8,21 +8,21 @@
 
 - name: Path for SSL enabled
   ansible.builtin.set_fact:
-    ssl_conf: "{{ httpd.home }}/httpd/conf.d/ssl.conf"
+    jbcs_ssl_conf: "{{ httpd.home }}/httpd/conf.d/ssl.conf"
 
 - name: Path for SSL disabled
   ansible.builtin.set_fact:
-    ssl_conf_disabled: "{{ ssl_conf }}.disabled"
+    jbcs_ssl_conf_disabled: "{{ jbcs_ssl_conf }}.disabled"
 
-- name: Check existance of SSL configuration
+- name: Check existence of SSL configuration
   ansible.builtin.stat:
-    path: "{{ ssl_conf }}"
-  register: ssl_conf_file
+    path: "{{ jbcs_ssl_conf }}"
+  register: jbcs_ssl_conf_file
 
-- name: Check existance of disabled SSL configuration
+- name: Check existence of disabled SSL configuration
   ansible.builtin.stat:
-    path: "{{ ssl_conf_disabled }}"
-  register: ssl_conf_disabled_file
+    path: "{{ jbcs_ssl_conf_disabled }}"
+  register: jbcs_ssl_conf_disabled_file
 
 - name: Disable SSL tasks
   become: "{{ jbcs_requires_become }}"
@@ -30,19 +30,19 @@
   block:
     - name: "Disabled SSL"
       ansible.builtin.file:
-        src: "{{ ssl_conf }}"
-        path: "{{ ssl_conf }}.disabled"
+        src: "{{ jbcs_ssl_conf }}"
+        path: "{{ jbcs_ssl_conf }}.disabled"
         state: hard
         owner: "{{ httpd.user.name }}"
         group: "{{ httpd.group.name }}"
         mode: '0640'
       when:
-        - ssl_conf_file.stat.exists
-        - not ssl_conf_disabled_file.stat.exists
+        - jbcs_ssl_conf_file.stat.exists
+        - not jbcs_ssl_conf_disabled_file.stat.exists
 
     - name: "Remove SSL configuration"
       ansible.builtin.file:
-        path: "{{ ssl_conf }}"
+        path: "{{ jbcs_ssl_conf }}"
         state: absent
 
 - name: Enable SSL tasks
@@ -52,7 +52,7 @@
     - name: Check if SSL certificate exists
       ansible.builtin.stat:
         path: "/etc/pki/tls/certs/{{ jbcs_external_domain_name }}.crt"
-      register: ssl_cert_file
+      register: jbcs_ssl_cert_file
 
     - name: Create self-signed SSL certificate if missing
       ansible.builtin.command: >
@@ -61,13 +61,13 @@
         -out /etc/pki/tls/certs/{{ jbcs_external_domain_name }}.crt
         -subj "/CN={{ jbcs_external_domain_name }}"
         -addext "subjectAltName=DNS:{{ jbcs_external_domain_name }},IP:127.0.0.1"
-      when: not ssl_cert_file.stat.exists
+      when: not jbcs_ssl_cert_file.stat.exists
       changed_when: true
 
     - name: "Ensures HTTPd SSL configuration is deployed"
       ansible.builtin.template:
         src: templates/ssl.conf.j2
-        dest: "{{ ssl_conf }}"
+        dest: "{{ jbcs_ssl_conf }}"
         owner: "{{ httpd.user.name }}"
         group: "{{ httpd.group.name }}"
         mode: '0640'
@@ -76,7 +76,7 @@
 
     - name: "Remove disabled conf if exists"
       ansible.builtin.file:
-        path: "{{ ssl_conf_disabled }}"
+        path: "{{ jbcs_ssl_conf_disabled }}"
         state: absent
       when:
-        - ssl_conf_disabled_file.stat.exists
+        - jbcs_ssl_conf_disabled_file.stat.exists

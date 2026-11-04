@@ -34,12 +34,12 @@ Role Defaults
 |`jbcs_group`| POSIX group for service | `apache` |
 |`jbcs_group_id`| POSIX gid for service | `48` |
 |`jbcs_service_name`| Name of systemd service | `jbcs` |
-|`jbcs_external_domain_name`| Name for virtualhost ServerName directive | `{{ ansible_nodename }}` |
+|`jbcs_external_domain_name`| Name for virtualhost ServerName directive | `{{ ansible_facts['nodename'] }}` |
 |`jbcs_configure_firewalld`| Whether to configure firewalld ports for jbcs | `True` |
 |`jbcs_port_check`| Whether to check open ports at end of playbook | `False` |
 |`jbcs_proxy_pass`| List of proxy pass directives/options. Element keys: path, url, reverse_path, reverse_url | `[]` |
 |`jbcs_patch`| Enable security patches install | `True` |
-|`jbcs_distro`|Target instance distributrion version | `RHEL8` |
+|`jbcs_distro`|Target instance distribution version | `RHEL8` |
 |`jbcs_arch`| Target instance architecture | `x86_64` |
 |`jbcs_bundle_prefix`| Filename prefix for JBCS install archives | `jbcs-httpd24-httpd` |
 

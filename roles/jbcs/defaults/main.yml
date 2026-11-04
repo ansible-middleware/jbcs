@@ -30,7 +30,7 @@ jbcs_group_id: 48
 
 jbcs_service_name: jbcs
 
-jbcs_external_domain_name: "{{ ansible_nodename }}"
+jbcs_external_domain_name: "{{ ansible_facts['nodename'] }}"
 
 jbcs_offline_install: true
 

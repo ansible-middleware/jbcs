@@ -47,36 +47,36 @@
 ## check remote archive
 - name: Set download archive path
   ansible.builtin.set_fact:
-    archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
+    jbcs_archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
 
 - name: Check download archive path
   become: "{{ jbcs_requires_become }}"
   ansible.builtin.stat:
-    path: "{{ archive }}"
-  register: archive_path
+    path: "{{ jbcs_archive }}"
+  register: jbcs_archive_path
 
 ## download to controller
 - name: Check local download archive path
   ansible.builtin.stat:
     path: "{{ lookup('env', 'PWD') }}"
-  register: local_path
+  register: jbcs_local_path
   delegate_to: localhost
 
 - name: Check local download archive
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
-  register: local_archive_path
+    path: "{{ jbcs_local_path.stat.path }}/{{ jbcs_bundle }}"
+  register: jbcs_local_archive_path
   delegate_to: localhost
 
 - name: Download JBCS from RHN using Unified Downloads
   delegate_to: localhost
   run_once: true
   when:
-    - archive_path is defined
-    - archive_path.stat is defined
-    - not archive_path.stat.exists
-    - local_archive_path.stat is defined
-    - not local_archive_path.stat.exists
+    - jbcs_archive_path is defined
+    - jbcs_archive_path.stat is defined
+    - not jbcs_archive_path.stat.exists
+    - jbcs_local_archive_path.stat is defined
+    - not jbcs_local_archive_path.stat.exists
     - not jbcs_offline_install
     - rhn_username is defined and rhn_password is defined
   block:
@@ -87,19 +87,21 @@
         product_type: DISTRIBUTION
         product_version: "{{ jbcs_version.split('.')[:2] | join('.') }}"
         product_category: "CORE.SERVICE.APACHEHTTP"
-      register: rhn_products
+      register: jbcs_rhn_products
       delegate_to: localhost
       run_once: true
 
     - name: Convert results to list if dict
       ansible.builtin.set_fact:
-        rhn_products_list: "{{ (rhn_products.results | dict2items | map(attribute='value') | list) if rhn_products.results is mapping else rhn_products.results }}"
+        jbcs_rhn_products_list: >-
+          {{ (jbcs_rhn_products.results | dict2items | map(attribute='value') | list)
+             if jbcs_rhn_products.results is mapping else jbcs_rhn_products.results }}
       delegate_to: localhost
       run_once: true
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        rhn_filtered_products: "{{ rhn_products_list | selectattr('file_name', 'match', \
+        jbcs_rhn_filtered_products: "{{ jbcs_rhn_products_list | selectattr('file_name', 'match', \
                                    '.*/' + [ jbcs_bundle_prefix, jbcs_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip') }}"
       delegate_to: localhost
       run_once: true
@@ -108,50 +110,50 @@
       middleware_automation.common.product_download:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
-        product_id: "{{ (rhn_filtered_products | first).id }}"
-        dest: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
+        product_id: "{{ (jbcs_rhn_filtered_products | first).id }}"
+        dest: "{{ jbcs_local_path.stat.path }}/{{ jbcs_bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: true
 
 - name: Check downloaded archive
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
-  register: local_archive_path
+    path: "{{ jbcs_local_path.stat.path }}/{{ jbcs_bundle }}"
+  register: jbcs_local_archive_path
   delegate_to: localhost
 
 ## copy and unpack
 - name: Copy archive to target nodes
   ansible.builtin.copy:
-    src: "{{ local_path.stat.path }}/{{ jbcs_bundle }}"
-    dest: "{{ archive }}"
+    src: "{{ jbcs_local_path.stat.path }}/{{ jbcs_bundle }}"
+    dest: "{{ jbcs_archive }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
     mode: '0640'
-  register: new_version_downloaded
+  register: jbcs_new_version_downloaded
   when:
-    - not archive_path.stat.exists
-    - local_archive_path.stat is defined
-    - local_archive_path.stat.exists
+    - not jbcs_archive_path.stat.exists
+    - jbcs_local_archive_path.stat is defined
+    - jbcs_local_archive_path.stat.exists
   become: "{{ jbcs_requires_become }}"
 
 - name: "Check target directory: {{ httpd.home }}"
   ansible.builtin.stat:
     path: "{{ httpd.home }}"
-  register: path_to_workdir
+  register: jbcs_path_to_workdir
   become: "{{ jbcs_requires_become }}"
 
 - name: Extract JBCS archive on target
   ansible.builtin.unarchive:
     remote_src: true
-    src: "{{ archive }}"
+    src: "{{ jbcs_archive }}"
     dest: /opt/jbcs/
     creates: "{{ httpd.home }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
   become: "{{ jbcs_requires_become }}"
   when:
-    - new_version_downloaded.changed or not path_to_workdir.stat.exists
+    - jbcs_new_version_downloaded.changed or not jbcs_path_to_workdir.stat.exists
   notify:
     - Restart JBCS
 
@@ -159,4 +161,4 @@
   ansible.builtin.debug:
     msg: "{{ httpd.home }} already exists and version unchanged, skipping decompression"
   when:
-    - not new_version_downloaded.changed and path_to_workdir.stat.exists
+    - not jbcs_new_version_downloaded.changed and jbcs_path_to_workdir.stat.exists

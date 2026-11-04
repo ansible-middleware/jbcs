@@ -1,0 +1,4 @@
+---
+rhn_username: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_CLIENTID') }}"
+rhn_password: "{{ lookup('env', 'UNIFIED_DOWNLOADS_API_SECRET') }}"
+jbcs_offline_install: "{{ (rhn_username | length == 0) or (rhn_password | length == 0) }}"

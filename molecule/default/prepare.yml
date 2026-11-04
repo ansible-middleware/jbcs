@@ -16,24 +16,6 @@
       ansible.builtin.debug:
         msg: "Ansible version is  {{ ansible_version.full }}"
 
-    - name: "Retrieve assets server from env"
-      ansible.builtin.set_fact:
-        assets_server: "{{ lookup('env','MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL') }}"
-
-    - name: "Download and deploy jbcs zips from {{ assets_server }}"
-      ansible.builtin.get_url:
-        url: "{{ asset }}"
-        dest: "{{ lookup('env', 'PWD') }}/"
-        validate_certs: no
-      delegate_to: localhost
-      loop:
-        - "{{ assets_server }}/coreservices/httpd24-2.4.62/jbcs-httpd24-httpd-2.4.62-RHEL9-x86_64.zip"
-      loop_control:
-        loop_var: asset
-      when:
-        - assets_server is defined
-        - assets_server | length > 0
-
     - name: "Create self signed cert"
       ansible.builtin.shell: |
         openssl req -x509 -newkey rsa:2048 -sha256 -days 1 -nodes -keyout /etc/pki/tls/private/instance.key -out /etc/pki/tls/certs/instance.crt -subj "/CN=instance" -addext 'subjectAltName=IP:127.0.0.1'

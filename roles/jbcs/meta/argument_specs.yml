@@ -112,7 +112,7 @@ argument_specs:
                 type: "str"
             jbcs_external_domain_name:
                 # line 25 of jbcs/defaults/main.yml
-                default: "{{ ansible_nodename }}"
+                default: "{{ ansible_facts['nodename'] }}"
                 description: "Name for virtualhost ServerName directive"
                 type: "str"
             jbcs_configure_firewalld:
