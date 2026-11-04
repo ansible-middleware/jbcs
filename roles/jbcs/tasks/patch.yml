@@ -12,7 +12,7 @@
         client_secret: "{{ rhn_password }}"
         product_type: SECURITY
         product_version: "{{ jbcs_version.split('.')[:2] | join('.') }}"
-        product_category: "core.service.apachehttp"
+        product_category: "CORE.SERVICE.APACHEHTTP"
       register: rhn_products
       delegate_to: localhost
       run_once: true
