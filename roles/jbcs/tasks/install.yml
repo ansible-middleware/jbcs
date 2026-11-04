@@ -11,7 +11,7 @@
     quiet: true
 
 - name: Create group
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.group:
     name: "{{ httpd.group.name }}"
     state: present
@@ -19,7 +19,7 @@
     system: true
 
 - name: Create user
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.user:
     name: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
@@ -36,7 +36,7 @@
   changed_when: false
 
 - name: Create directory for zipfile
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.file:
     path: "{{ jbcs_zip_path }}"
     owner: "{{ httpd.user.name }}"
@@ -50,7 +50,7 @@
     archive: "{{ jbcs_zip_path }}/{{ jbcs_bundle }}"
 
 - name: Check download archive path
-  become: true
+  become: "{{ jbcs_requires_become }}"
   ansible.builtin.stat:
     path: "{{ archive }}"
   register: archive_path
@@ -133,13 +133,13 @@
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: true
+  become: "{{ jbcs_requires_become }}"
 
 - name: "Check target directory: {{ httpd.home }}"
   ansible.builtin.stat:
     path: "{{ httpd.home }}"
   register: path_to_workdir
-  become: true
+  become: "{{ jbcs_requires_become }}"
 
 - name: Extract JBCS archive on target
   ansible.builtin.unarchive:
@@ -149,7 +149,7 @@
     creates: "{{ httpd.home }}"
     owner: "{{ httpd.user.name }}"
     group: "{{ httpd.group.name }}"
-  become: true
+  become: "{{ jbcs_requires_become }}"
   when:
     - new_version_downloaded.changed or not path_to_workdir.stat.exists
   notify:
