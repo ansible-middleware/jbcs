@@ -9,6 +9,11 @@ This changelog describes changes after version 1.0.0.
 v1.1.7-devel
 ============
 
+Minor Changes
+-------------
+
+- AMW-672 jbcs collection is missing the updated CI infra `#35 <https://github.com/ansible-middleware/jbcs/pull/35>`_
+
 v1.1.6
 ======
 
