@@ -14,6 +14,11 @@ Minor Changes
 
 - AMW-672 jbcs collection is missing the updated CI infra `#35 <https://github.com/ansible-middleware/jbcs/pull/35>`_
 
+Bugfixes
+--------
+
+- AMW-671 jbcs fails with invalid product category `#34 <https://github.com/ansible-middleware/jbcs/pull/34>`_
+
 v1.1.6
 ======
 
