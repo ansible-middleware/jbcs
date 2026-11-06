@@ -1,0 +1,78 @@
+# Ansible Collection - middleware_automation.jbcs
+<!--start build_status -->
+[![Build Status](https://github.com/ansible-middleware/jbcs/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ansible-middleware/jbcs/actions/workflows/ci.yml)
+
+<!--end build_status -->
+Collection to install and configure JBoss Core Services as a reverse proxy / modcluster instance.
+
+<!--start requires_ansible-->
+## Ansible version compatibility
+
+This collection has been tested against following Ansible versions: **>=2.16.0**.
+
+## Python version compatibility
+
+This collection has been tested against following Python versions: **>=3.12**.
+
+Plugins and modules within a collection may be tested with only specific Ansible versions. A collection may contain metadata that identifies these versions.
+<!--end requires_ansible-->
+
+
+## Installation
+
+<!--start galaxy_download -->
+### Installing the Collection from Ansible Galaxy
+
+Before using the collection, you need to install it with the Ansible Galaxy CLI:
+
+    ansible-galaxy collection install middleware_automation.jbcs
+
+<!--end galaxy_download -->
+
+You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml`, using the format:
+
+```yaml
+---
+collections:
+  - name: middleware_automation.jbcs
+```
+
+<!--start roles_paths -->
+### Included roles
+
+* [`jbcs`](https://github.com/ansible-middleware/jbcs/blob/main/roles/jbcs/README.md): role for installing the service.
+<!--end roles_paths -->
+
+### Usage
+
+Using all default values, the collection is invoked from a playbook as follows:
+
+```
+- name: Converge
+  hosts: all
+  collections:
+    - middleware_automation.jbcs
+  roles:
+    - jbcs
+```
+
+
+## Support
+
+<!--start support -->
+
+For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/jbcs/issues).
+
+<!--end support -->
+
+
+## Release and Upgrade Notes
+
+For details on changes between versions, please see the [CHANGELOG](https://github.com/ansible-middleware/jbcs/blob/main/CHANGELOG.rst) for this collection.
+
+## License
+
+Apache License v2.0 or later
+
+See [LICENSE](https://github.com/ansible-middleware/jbcs/blob/main/LICENSE) to view the full text.
+
