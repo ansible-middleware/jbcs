@@ -18,6 +18,7 @@ Bugfixes
 --------
 
 - AMW-671 jbcs fails with invalid product category `#34 <https://github.com/ansible-middleware/jbcs/pull/34>`_
+- Fix yaml[line-length] violations exceeding 160 chars `#36 <https://github.com/ansible-middleware/jbcs/pull/36>`_
 
 v1.1.6
 ======

@@ -247,7 +247,7 @@
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_external_domain_name</span></code></p></td>
 <td class="text-left"><p>Name for virtualhost ServerName directive</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ansible_nodename</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">ansible_facts['nodename']</span> <span class="pre">}}</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_configure_firewalld</span></code></p></td>
 <td class="text-left"><p>Whether to configure firewalld ports for jbcs</p></td>
@@ -266,7 +266,7 @@
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_distro</span></code></p></td>
-<td class="text-left"><p>Target instance distributrion version</p></td>
+<td class="text-left"><p>Target instance distribution version</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">RHEL8</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jbcs_arch</span></code></p></td>
