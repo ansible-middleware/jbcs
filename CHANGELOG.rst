@@ -6,6 +6,20 @@ middleware\_automation.jbcs Release Notes
 
 This changelog describes changes after version 1.0.0.
 
+v1.1.7
+======
+
+Minor Changes
+-------------
+
+- AMW-672 jbcs collection is missing the updated CI infra `#35 <https://github.com/ansible-middleware/jbcs/pull/35>`_
+
+Bugfixes
+--------
+
+- AMW-671 jbcs fails with invalid product category `#34 <https://github.com/ansible-middleware/jbcs/pull/34>`_
+- Fix yaml[line-length] violations exceeding 160 chars `#36 <https://github.com/ansible-middleware/jbcs/pull/36>`_
+
 v1.1.6
 ======
 

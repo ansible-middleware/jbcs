@@ -125,3 +125,21 @@ releases:
     - 30.yaml
     - 31.yaml
     release_date: '2026-06-16'
+  1.1.7:
+    changes:
+      bugfixes:
+      - 'AMW-671 jbcs fails with invalid product category `#34 <https://github.com/ansible-middleware/jbcs/pull/34>`_
+
+        '
+      - 'Fix yaml[line-length] violations exceeding 160 chars `#36 <https://github.com/ansible-middleware/jbcs/pull/36>`_
+
+        '
+      minor_changes:
+      - 'AMW-672 jbcs collection is missing the updated CI infra `#35 <https://github.com/ansible-middleware/jbcs/pull/35>`_
+
+        '
+    fragments:
+    - 34.yaml
+    - 35.yaml
+    - 36.yaml
+    release_date: '2026-11-06'
