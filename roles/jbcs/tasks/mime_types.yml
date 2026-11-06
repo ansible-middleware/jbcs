@@ -2,7 +2,7 @@
 - name: Check if mime.types exists
   ansible.builtin.stat:
     path: /etc/mime.types
-  register: mime_types_file
+  register: jbcs_mime_types_file
 
 - name: Create mime.types if missing
   become: "{{ jbcs_requires_become }}"
@@ -10,4 +10,4 @@
     url: https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
     dest: /etc/mime.types
     mode: '0644'
-  when: not mime_types_file.stat.exists
+  when: not jbcs_mime_types_file.stat.exists

@@ -1,5 +1,5 @@
 ---
-- name: Include prereq trasks
+- name: Include prereq tasks
   ansible.builtin.include_tasks: prereqs.yml
 
 - name: Import firewalld tasks

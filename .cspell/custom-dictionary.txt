@@ -42,5 +42,32 @@ gpgkey
 modcluster
 zipfile
 
+# Middleware product names
+Infinispan
+Wildfly
+
+# System libraries
+jansson
+libxcrypt
+yajl
+
+# Apache modules and terms
+setenvif
+shmcb
+speling
+vrml
+wstunnel
+MCPM
+BLANKICON
+DAVFS
+
+# File formats / encodings
+uuencoded
+shar
+
+# Other software
+Dreamweaver
+
 # Miscellaneous
 rootperm
+COLORTERM

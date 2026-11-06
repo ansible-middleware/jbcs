@@ -1,7 +1,13 @@
 ---
 - name: Verify
   hosts: all
+  vars_files:
+    - vars.yml
   tasks:
+    - name: "Skip verification when credentials not provided"
+      ansible.builtin.meta: end_play
+      when: jbcs_offline_install | bool
+
     - name: Test port 80 redirect to 443
       ansible.builtin.uri:
         url: http://localhost

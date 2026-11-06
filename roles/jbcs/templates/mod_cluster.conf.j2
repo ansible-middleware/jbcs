@@ -21,18 +21,18 @@ SSLProxyCheckPeerName off
   ProxyPreserveHost On
   ProxyRequests Off
   ServerName {{ jbcs_external_domain_name }}
-  ServerAlias {{ ansible_nodename }}
+  ServerAlias {{ ansible_facts['nodename'] }}
   Redirect permanent / https://{{ jbcs_external_domain_name }}/
 </VirtualHost>
 
 <IfModule manager_module>
   Listen 6666
-  <VirtualHost {{ ansible_nodename }}:{{ httpd.mod_cluster.port }}>
+  <VirtualHost {{ ansible_facts['nodename'] }}:{{ httpd.mod_cluster.port }}>
     DirectoryIndex disabled
     KeepAliveTimeout 60
     MaxKeepAliveRequests 0
 
-    ServerAdvertise on {{ ansible_nodename }}:{{ httpd.mod_cluster.port }}
+    ServerAdvertise on {{ ansible_facts['nodename'] }}:{{ httpd.mod_cluster.port }}
     AdvertiseFrequency 5
 
     ManagerBalancerName "{{ jbcs_mod_cluster_balancer }}"
