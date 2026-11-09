@@ -9,6 +9,11 @@ This changelog describes changes after version 1.0.0.
 v1.1.8-devel
 ============
 
+Minor Changes
+-------------
+
+- Fix AAH import review items: align dependency version and metadata `#39 <https://github.com/ansible-middleware/jbcs/pull/39>`_
+
 v1.1.7
 ======
 
