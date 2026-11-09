@@ -43,7 +43,7 @@
     - name: Determine latest patch version
       ansible.builtin.set_fact:
         jbcs_rhn_filtered_products: "{{ jbcs_rhn_products_list | selectattr('file_name', 'match', \
-                                   '[^/]*/' + [ jbcs_bundle_prefix, jbcs_version, jbcs_latest_patch_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip$') }}"
+                                   '[^/]*/' + [jbcs_bundle_prefix, jbcs_version, jbcs_latest_patch_version, jbcs_distro, jbcs_arch] | join('-') + '.zip$') }}"
       delegate_to: localhost
       run_once: true
 
@@ -90,9 +90,9 @@
         jbcs_prefix: "{{ jbcs_bundle_prefix }}-{{ jbcs_version }}-SP"
         jbcs_suffix: "-{{ jbcs_distro }}-{{ jbcs_arch }}.zip"
       ansible.builtin.set_fact:
-        jbcs_newest_sp: "{{ jbcs_sp_archive_candidates | \
-                       map('replace', jbcs_prefix, '') | \
-                       map('replace', jbcs_suffix, '')  | \
+        jbcs_newest_sp: "{{ jbcs_sp_archive_candidates |
+                       map('replace', jbcs_prefix, '') |
+                       map('replace', jbcs_suffix, '') |
                        map('int') | sort | last }}"
 
     - name: "Use SP {{ jbcs_newest_sp }}"

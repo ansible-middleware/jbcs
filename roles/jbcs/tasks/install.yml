@@ -102,7 +102,7 @@
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
         jbcs_rhn_filtered_products: "{{ jbcs_rhn_products_list | selectattr('file_name', 'match', \
-                                   '.*/' + [ jbcs_bundle_prefix, jbcs_version, jbcs_distro, jbcs_arch ] | join('-') + '.zip') }}"
+                                   '.*/' + [jbcs_bundle_prefix, jbcs_version, jbcs_distro, jbcs_arch] | join('-') + '.zip') }}"
       delegate_to: localhost
       run_once: true
 
